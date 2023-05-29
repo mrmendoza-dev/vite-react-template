@@ -1,0 +1,52 @@
+@import "./variables.scss";
+@import "./compatibility.scss";
+@import "./mixins.scss";
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: $fw-reg;
+  color: #fff;
+  background-color: #000;
+  justify-content: center;
+  place-items: center;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  overflow-x: hidden;
+  touch-action: auto;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+strong {
+  font-weight: $fw-bold;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+button {
+  cursor: pointer;
+}
+
