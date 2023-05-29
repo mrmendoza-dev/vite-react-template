@@ -1,5 +1,6 @@
-import { useState } from "react";
-import "./scss/App.css";
+import { useState, useEffect } from "react";
+import "./styles/App.scss";
+
 import Component from "./components/Component/Component";
 function App() {
   return (
