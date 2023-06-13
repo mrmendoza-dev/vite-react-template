@@ -2,9 +2,10 @@
 
 ## TODO
 - Add HTML meta tags, SEO tags
-- Add favicon folder
 - Resource List
-
+- Custom .gitigore
+- Basic server.js
+- Implement basic Redux setup
 
 
 ## Resources
