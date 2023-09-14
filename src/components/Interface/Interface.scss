@@ -9,8 +9,8 @@
   grid-template-columns: repeat(4, 1fr);
   grid-template-areas:
     "nav nav nav nav"
-    "sidebar main main main"
-    "footer footer footer footer";
+    "main main main main"
+    "main main main main";
 
   grid-template-rows: 60px 1fr 50px;
 }
@@ -23,7 +23,7 @@
 .Sidebar {
   grid-area: sidebar;
   background-color: $clr-sidebar;
-  min-width: 200px;
+  // min-width: 200px;
 }
 
 .Main {
