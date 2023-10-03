@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { nanoid } from "nanoid";
-import "./Main.scss";
-
-let VITE_RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
+import { useEffect, useState } from "react";
+import GameCard from "../components/GameCard";
 
 const games = [
   {
@@ -158,32 +155,63 @@ const games = [
 ];
 
 function Main() {
+  let VITE_RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
+
   const [gamesList, setGamesList] = useState([]);
 
+
+
+  
+
+
+
   const consoleOptions = [
-    { label: "Xbox One", value: 1 },
-    { label: "Xbox 360", value: 3 },
-    { label: "PC (Microsoft Windows)", value: 4 },
+    { label: "PC (Windows)", value: 3 },
+    { label: "macOS", value: 4 },
+    { label: "Linux", value: 5 },
 
-
-    { label: "Wii", value: 5 },
-    { label: "PlayStation 3", value: 8 },
-    { label: "PlayStation", value: 9 },
-    { label: "Nintendo 3DS", value: 10 },
-    { label: "PlayStation Portable (PSP)", value: 11 },
-    // { label: "Sega Genesis", value: 29 },
-    { label: "Nintendo DS", value: 28 },
-    { label: "Game Boy Advance", value: 24 },
-    { label: "GameCube", value: 21 },
+    // { label: "Six", value: 6 },
     { label: "Nintendo Switch", value: 7 },
-    { label: "PlayStation Vita", value: 19 },
-    { label: "PlayStation 2", value: 15 },
-    // { label: "Sega Saturn", value: 33 },
+    { label: "Nintendo 3DS", value: 8 },
+    // { label: "Nintendo DS", value: 9 },
+    { label: "Wii U", value: 10 },
+    { label: "Wii", value: 11 },
+
+    { label: "Neo Geo", value: 12 },
+    { label: "Nintendo DSi", value: 13 },
+
+    { label: "PlayStation 3", value: 14 }, // None?
+    // { label: "Sixteen", value: 16 },
+    { label: "PSP", value: 17 },
+    // { label: "Twenty", value: 20 }, //None
+    { label: "Android", value: 21 },
+    { label: "Atari Flashback", value: 22 },
+    // { label: "Twenty-Three", value: 23 },
+    { label: "Game Boy Advance", value: 24 },
+    { label: "Atari 8-bit", value: 25 },
+    { label: "Game Boy", value: 26 },
+    // { label: "Twenty-Eight", value: 28 },
+
+
+    { label: "Xbox 360", value: 9 },
+    { label: "Xbox One", value: 1 },
     { label: "Xbox Series X/S", value: 186 },
+
+    { label: "PlayStation", value: 27 },
+    { label: "PlayStation 2", value: 15 },
+    { label: "PlayStation 4", value: 18 },
     { label: "PlayStation 5", value: 187 },
+    { label: "PlayStation Vita", value: 19 },
+
+    // { label: "Nintendo Switch", value: 6 },
+
+    // { label: "Wii", value: 5 },
+    // { label: "Nintendo 3DS", value: 10 },
+    // { label: "PlayStation 3", value: 8 },
     // { label: "Wii U", value: 42 },
     // { label: "Sega Dreamcast", value: 36 },
-    { label: "PlayStation 4", value: 18 },
+    // { label: "Sega Saturn", value: 33 },
+    // { label: "Sega Genesis", value: 29 },
   ];
 
   const [selectedConsole, setSelectedConsole] = useState("");
@@ -240,118 +268,50 @@ function Main() {
 
   return (
     <div className="Main">
-      <div>
-        <h2>Filter by Console:</h2>
-        <div className="console-buttons">
-          {consoleOptions.map((option) => (
-            <button
-              key={option.value}
-              className={`console-button ${
-                activeConsoles.includes(option.value) ? "active bg-blue-600" : ""
-              }`}
-              onClick={() => toggleConsole(option.value)}
-            >
-              {option.label}
-            </button>
-          ))}
+      <main className="p-4 md:ml-64 h-auto pt-20">
+        <div className="Main">
+          <div>
+            <h2>Filter by Console:</h2>
+            <div className="console-buttons">
+              {consoleOptions.map((option, index) => (
+                <button
+                  key={option.value}
+                  className={`px-4 py-2 text-sm font-medium border ${
+                    index === 0
+                      ? "rounded-l-lg"
+                      : index === consoleOptions.length - 1
+                      ? "rounded-r-md"
+                      : ""
+                  } ${
+                    activeConsoles.includes(option.value)
+                      ? "dark:bg-blue-600 dark:border-blue-600 dark:text-white bg-blue-600 border-blue-600 text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                      : "dark:bg-gray-700 dark:border-gray-600 dark:text-white bg-white border-gray-200 text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+                  }`}
+                  onClick={() => toggleConsole(option.value)}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+
+            <p>Selected Consoles: {activeConsoles || "None"}</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {gamesList &&
+              gamesList.map((game) => (
+                <GameCard
+                  key={game.id} // Add a unique key to each element in the map function
+                  title={game.name}
+                  image={game.background_image}
+                  platforms={game.platforms}
+                  genres={game.genres}
+                  screenshots={game.short_screenshots}
+                />
+              ))}
+          </div>
         </div>
-        <p>Selected Consoles: {activeConsoles || "None"}</p>
-      </div>
-
-      <div className="games-grid gap-3">
-        {gamesList &&
-          gamesList.map((game) => {
-            return (
-              <>
-                {game && (
-                  <div
-                    className="GameCard game-item p-4 bg-gray-800"
-                    key={nanoid()}
-                  >
-                    <p className="game-title text-lg">{game.name}</p>
-                    <p className="game-description text-base">
-                      {game.description}
-                    </p>
-                    <div className="flex gap-3">
-                      <p className="game-release-date text-sm">
-                        {game.released}
-                      </p>
-                      <p className="game-rating text-sm">
-                        {/* {game.esrb_rating.name} */}
-                      </p>
-
-                      <div className="flex gap-2">
-                        <p className="game-score">{game.metacritic}</p>
-                        {/* <p className="game-score">
-                    {game.rating}/{game.rating_top}
-                  </p> */}
-                      </div>
-                    </div>
-                    <div className="flex">
-                      <p className="game-playtime">{game.playtime} hours</p>
-                    </div>
-
-                    <div className="image-wrapper">
-                      <img
-                        className="game-cover-art"
-                        src={game.background_image}
-                        alt={game.name}
-                      />
-                    </div>
-
-                    <div className="genres flex gap-3 flex-wrap text-sm">
-                      {game.genres &&
-                        game.genres.map((genre) => {
-                          return (
-                            <p key={nanoid()} className="genre">
-                              {genre.name}
-                            </p>
-                          );
-                        })}
-                    </div>
-
-                    <div className="platforms flex gap-3 flex-wrap text-sm">
-                      {game.platforms &&
-                        game.platforms.map((platform) => {
-                          return (
-                            <p key={nanoid()} className="platform">
-                              {platform.platform.name}
-                            </p>
-                          );
-                        })}
-                    </div>
-
-                    {/* <div className="tags flex gap-3 text-xs flex-wrap">
-                {game.tags &&
-                  game.tags.map((tag) => {
-                    return (
-                      <p key={nanoid()} className="genre">
-                        {tag.name}
-                      </p>
-                    );
-                  })}
-              </div> */}
-
-                    <div className="screenshots-grid">
-                      {game.short_screenshots &&
-                        game.short_screenshots.map((screenshot) => {
-                          return (
-                            <div className="screenshot-wrapper" key={nanoid()}>
-                              <img
-                                className="screenshot"
-                                src={screenshot.image}
-                                alt={game.name}
-                              />
-                            </div>
-                          );
-                        })}
-                    </div>
-                  </div>
-                )}
-              </>
-            );
-          })}
-      </div>
+      </main>
     </div>
   );
 }

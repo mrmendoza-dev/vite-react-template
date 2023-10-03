@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import "./styles/App.scss";
 
-import Interface from "./components/Interface/Interface";
+import ApplicationShell from "./ApplicationShell/ApplicationShell";
+
 function App() {
   return (
     <div className="App">
-      <Interface />
+      <ApplicationShell />
     </div>
   );
 }
