@@ -46,7 +46,7 @@ function GameCard({ title, image, platforms, genres, screenshots, rating }) {
               })}
           </div>
 
-          <div className="screenshots-grid grid grid-cols-2 gap-3">
+          <div className="screenshots-grid grid grid-cols-3 gap-3">
             {screenshots &&
               screenshots.map((screenshot) => {
                 return (
