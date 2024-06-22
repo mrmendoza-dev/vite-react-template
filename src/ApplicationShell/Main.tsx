@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, Link } from "react-router-dom";
-import Emulators from "../pages/Emulators";
-import GameSearch from "../pages/GameSearch";
+
+import Home from "../pages/Home";
 
 function Main() {
   return (
-    <div className="Main">
+    <div className="Main h-full">
       <main className="p-4 md:ml-64 h-auto pt-20">
         <Routes>
-          <Route path="/" element={<GameSearch />} />
-          <Route path="/search" element={<GameSearch />} />
-          <Route path="/emulators" element={<Emulators />} />
-          <Route path="/settings" element={<div>Settings</div>} />
+          <Route path="/" element={<Home />} />
+
         </Routes>
       </main>
     </div>

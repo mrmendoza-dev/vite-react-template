@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "./styles/App.scss";
 
 import ApplicationShell from "./ApplicationShell/ApplicationShell";
 

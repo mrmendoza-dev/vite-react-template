@@ -1,5 +1,7 @@
-@import "./variables.scss";
-@import "./mixins.scss";
+
+@import "variables";
+@import "mixins";
+@import "tailwind";
 
 
 * {
@@ -48,4 +50,14 @@ button {
 
 ul {
   list-style: none;
+}
+
+
+.App {
+
+}
+
+
+input, textarea, select {
+    background-color: black;
 }

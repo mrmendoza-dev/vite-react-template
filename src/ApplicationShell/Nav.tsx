@@ -6,32 +6,28 @@ function Nav({ apps }: any) {
   const notifications = [
     {
       id: 1,
-      avatar:
-        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/bonnie-green.png",
+      avatar: "/images/avatar.jpg",
       name: "Bonnie Green",
       message: "New message: 'Hey, what's up? All set for the presentation?'",
       time: "a few moments ago",
     },
     {
       id: 2,
-      avatar:
-        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png",
+      avatar: "/images/avatar.jpg",
       name: "Jese Leos",
       message: "Jese Leos and 5 others started following you.",
       time: "10 minutes ago",
     },
     {
       id: 3,
-      avatar:
-        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png",
+      avatar: "/images/avatar.jpg",
       name: "Joseph Mcfall",
       message: "Joseph Mcfall and 141 others love your story.",
       time: "44 minutes ago",
     },
     {
       id: 4,
-      avatar:
-        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png",
+      avatar: "/images/avatar.jpg",
       name: "Leslie Livingston",
       message:
         "Leslie Livingston mentioned you in a comment: @bonnie.green what do you say?",
@@ -39,8 +35,7 @@ function Nav({ apps }: any) {
     },
     {
       id: 5,
-      avatar:
-        "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/robert-brown.png",
+      avatar: "/images/avatar.jpg",
       name: "Robert Brown",
       message:
         "Robert Brown posted a new video: Glassmorphism - learn how to implement the new design trend.",
@@ -90,12 +85,12 @@ function Nav({ apps }: any) {
             </button>
             <a href="#" className="flex items-center justify-between mr-4">
               <img
-                src="https://flowbite.s3.amazonaws.com/logo.svg"
+                src="/images/logo.png"
                 className="mr-3 h-8"
                 alt="Flowbite Logo"
               />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                Flowbite
+              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-black">
+                Title
               </span>
             </a>
             <form action="#" method="GET" className="hidden md:block md:pl-2">
@@ -256,7 +251,7 @@ function Nav({ apps }: any) {
               <span className="sr-only">Open user menu</span>
               <img
                 className="w-8 h-8 rounded-full"
-                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png"
+                src="/images/avatar.jpg"
                 alt="user photo"
               />
             </button>
@@ -267,10 +262,10 @@ function Nav({ apps }: any) {
             >
               <div className="py-3 px-4">
                 <span className="block text-sm font-semibold text-gray-900 dark:text-white">
-                  Neil Sims
+                  User Name
                 </span>
                 <span className="block text-sm text-gray-900 truncate dark:text-white">
-                  name@flowbite.com
+                  username@email.com
                 </span>
               </div>
               <ul
@@ -303,10 +298,9 @@ function Nav({ apps }: any) {
                     href="#"
                     className="flex items-center py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                   >
-
                     <FontAwesomeIcon
                       aria-hidden="true"
-                      icon={icons.faHeart}
+                      icon={icons.faHeartFilled}
                       className="mr-2 w-4 h-4 text-gray-400"
                     />
                     My likes

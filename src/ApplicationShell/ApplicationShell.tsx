@@ -9,8 +9,8 @@ function ApplicationShell() {
   ];
 
   return (
-    <div className="ApplicationShell">
-      <div className="antialiased bg-gray-50 dark:bg-gray-900">
+    <div className="ApplicationShell w-screen h-screen">
+      <div className="antialiased bg-gray-50 dark:bg-gray-900 h-full">
         <Nav apps={apps} />
         <Sidebar />
         <Main />
