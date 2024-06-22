@@ -1,8 +1,12 @@
 import ThemeToggle from "./ThemeToggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { icons } from "../assets/icons";
+import { useContext } from "react";
+import { ApplicationShellContext } from "./ApplicationShell";
 
-function Nav({ apps }: any) {
+function Nav() {
+  const { apps } = useContext(ApplicationShellContext);
+
   const notifications = [
     {
       id: 1,
