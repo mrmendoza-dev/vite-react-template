@@ -1,8 +1,8 @@
-import ThemeToggle from "./ThemeToggle";
+import { icons } from "@assets/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icons } from "../assets/icons";
 import { useContext } from "react";
 import { ApplicationShellContext } from "./ApplicationShell";
+import ThemeToggle from "./ThemeToggle";
 
 function Nav() {
   const { apps } = useContext(ApplicationShellContext);

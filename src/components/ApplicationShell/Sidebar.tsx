@@ -1,5 +1,5 @@
+import { icons } from "@assets/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { icons } from "../assets/icons";
 import { Link } from "react-router-dom";
 
 function Sidebar() {

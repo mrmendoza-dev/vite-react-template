@@ -1,18 +1,15 @@
 import { useState, useEffect } from "react";
 
-const useThemeToggle = () => {
-  //   const [isDarkMode, setIsDarkMode] = useState(
-  //     () =>
-  //       localStorage.getItem("color-theme") === "dark" ||
-  //       (!("color-theme" in localStorage) &&
-  //         window.matchMedia("(prefers-color-scheme: dark)").matches)
-  //   );
+
+type UseThemeToggle = [boolean, () => void];
+
+const useThemeToggle = (): UseThemeToggle => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("color-theme");
     if (savedTheme) {
       return savedTheme === "dark";
     }
-    return true;
+    return true; // Default to dark mode if not specified
   });
 
   useEffect(() => {
@@ -25,7 +22,7 @@ const useThemeToggle = () => {
     }
   }, [isDarkMode]);
 
-  const toggleTheme = () => {
+  const toggleTheme = (): any => {
     setIsDarkMode((prevMode) => !prevMode);
   };
 

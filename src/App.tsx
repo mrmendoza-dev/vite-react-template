@@ -1,5 +1,5 @@
 
-import ApplicationShell from "./ApplicationShell/ApplicationShell";
+import ApplicationShell from "@components/ApplicationShell/ApplicationShell";
 
 function App() {
   return (

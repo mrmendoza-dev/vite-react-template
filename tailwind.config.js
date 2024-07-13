@@ -1,5 +1,13 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
 const colors = require("tailwindcss/colors");
+
+// Deleted deprecated colors
+delete colors.lightBlue;
+delete colors.warmGray;
+delete colors.trueGray;
+delete colors.coolGray;
+delete colors.blueGray;
+
 const customColors = {
   tahiti: {
     light: "#67e8f9",
@@ -21,10 +29,10 @@ const {
 } = require("tailwindcss/lib/util/flattenColorPalette");
 
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   content: [
-    "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html",
+    "./index.html",
     "./node_modules/flowbite-react/lib/esm/**/*.js",
     "./node_modules/flowbite/**/*.js",
   ],
@@ -44,6 +52,7 @@ module.exports = {
         // gray: colors.neutral,
         gray: colors.slate,
         // gray: customColors.tahiti,
+        
       },
       animation: {
         scroll:
