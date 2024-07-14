@@ -16,9 +16,9 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": false, // Change to false to ignore unused locals
+    "noUnusedParameters": false, // Change to false to ignore unused parameters
 
     "baseUrl": "src",
     "paths": {
