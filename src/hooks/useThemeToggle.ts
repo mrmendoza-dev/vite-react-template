@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 
-
-type UseThemeToggle = [boolean, () => void];
-
-const useThemeToggle = (): UseThemeToggle => {
+const useThemeToggle = () => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("color-theme");
     if (savedTheme) {
       return savedTheme === "dark";
     }
-    return true; // Default to dark mode if not specified
+    return true;
   });
 
   useEffect(() => {
@@ -22,11 +19,14 @@ const useThemeToggle = (): UseThemeToggle => {
     }
   }, [isDarkMode]);
 
-  const toggleTheme = (): any => {
+  const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
   };
 
-  return [isDarkMode, toggleTheme];
+  return {
+    isDarkMode,
+    toggleTheme,
+  };
 };
 
 export default useThemeToggle;

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useThemeToggle from "@hooks/useThemeToggle";
 
 const ThemeToggle = () => {
-  const [isDarkMode, toggleTheme] = useThemeToggle();
+  const { isDarkMode, toggleTheme } = useThemeToggle();
 
   return (
     <button
