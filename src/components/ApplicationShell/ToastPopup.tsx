@@ -1,6 +1,6 @@
 import { icons } from "@assets/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import classNames from "classnames";
+import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { useToast } from "@contexts/ToastContext";
 

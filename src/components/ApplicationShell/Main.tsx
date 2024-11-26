@@ -7,7 +7,7 @@ function Main() {
   const location = useLocation();
 
   return (
-    <main className="Main w-full h-full flex flex-col overflow-auto">
+    <main className="Main w-full h-full flex flex-col overflow-auto p-2">
       <TransitionGroup>
         <CSSTransition key={location.pathname} classNames="fade" timeout={200}>
           <Routes>
