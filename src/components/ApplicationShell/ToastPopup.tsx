@@ -1,8 +1,7 @@
-import { icons } from "@assets/icons";
+import { icons } from "@/assets/icons";
+import { useToast } from "@/contexts/ToastContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import clsx from "clsx";
-import React, { useEffect, useState } from "react";
-import { useToast } from "@contexts/ToastContext";
+import { useEffect, useState } from "react";
 
 const ToastPopup = ({ className, children, timerSeconds = 5 }: any) => {
   const { toastMessage, setToastMessage } = useToast();

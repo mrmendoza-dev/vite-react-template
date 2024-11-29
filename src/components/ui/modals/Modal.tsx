@@ -1,4 +1,4 @@
-import { icons } from "@assets/icons";
+import { icons } from "@/assets/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function Modal({ isOpen, toggleModal, title, children }: any) {

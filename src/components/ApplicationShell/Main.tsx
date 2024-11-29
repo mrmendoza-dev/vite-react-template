@@ -1,7 +1,7 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import Home from "@pages/Home";
+import Home from "@/pages/Home";
 
 function Main() {
   const location = useLocation();

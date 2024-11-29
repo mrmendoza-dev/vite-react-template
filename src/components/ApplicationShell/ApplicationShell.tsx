@@ -1,8 +1,6 @@
-import React from "react";
-import Main from "@components/ApplicationShell/Main";
-import Nav from "@components/ApplicationShell/Nav";
-import Sidebar from "@components/ApplicationShell/Sidebar";
-
+import Main from "@/components/ApplicationShell/Main";
+import Nav from "@/components/ApplicationShell/Nav";
+import Sidebar from "@/components/ApplicationShell/Sidebar";
 
 function ApplicationShell() {
   return (

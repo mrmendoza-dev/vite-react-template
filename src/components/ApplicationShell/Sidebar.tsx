@@ -1,7 +1,7 @@
-import { icons } from "@assets/icons";
+import { icons } from "@/assets/icons";
+import { useApplicationShell } from "@/contexts/ApplicationShellContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { useApplicationShell } from "@contexts/ApplicationShellContext";
 
 function Sidebar() {
   const pages = [
@@ -21,14 +21,14 @@ function Sidebar() {
 
   return (
     <aside
-      className="Sidebar h-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700 overflow-hidden transition-all duration-300 ease-in-out"
+      className="Sidebar h-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700 overflow-hidden ease-in-out"
       aria-label="Sidenav"
       id="drawer-navigation"
       style={{ width: `${sidebarWidth}rem` }}
     >
       {expandedSidebar && (
         <div className="overflow-y-auto py-5 px-3 h-full">
-          <hr className="border-t border-gray-700 my-4-4" />
+          <hr className="border-t border-gray-200 dark:border-gray-700 my-4-4" />
 
           <ul className="pt-5 mt-5 space-y-2">
             {pages.map((page, index) => (
