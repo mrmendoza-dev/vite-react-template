@@ -1,5 +1,4 @@
 
-
 function Home() {
   return (
     <div className="Home">
@@ -7,6 +6,5 @@ function Home() {
     </div>
   );
 }
-
 
 export default Home;
