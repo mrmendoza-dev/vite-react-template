@@ -1,9 +1,12 @@
+
 import { icons } from "@/assets/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import useThemeToggle from "@/hooks/useThemeToggle";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const ThemeToggle = () => {
-  const { isDarkMode, toggleTheme } = useThemeToggle();
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   return (
     <button
@@ -13,12 +16,17 @@ const ThemeToggle = () => {
       onClick={toggleTheme}
     >
       <FontAwesomeIcon
-        icon={isDarkMode ? icons.faMoon : icons.faSun}
-        id={isDarkMode ? "theme-toggle-dark-icon" : "theme-toggle-light-icon"}
+        icon={theme === "dark" ? icons.faMoon : icons.faSun}
+        id={
+          theme === "dark"
+            ? "theme-toggle-dark-icon"
+            : "theme-toggle-light-icon"
+        }
         className={`size-5`}
       />
     </button>
   );
 };
+
 
 export default ThemeToggle;

@@ -1,15 +1,12 @@
 import ApplicationShell from "@/components/ApplicationShell/ApplicationShell";
-import { ApplicationShellProvider } from "@/contexts/ApplicationShellContext";
-import { ToastProvider } from "@/contexts/ToastContext";
+import { Providers } from "@/contexts/Providers";
 
 function App() {
   return (
     <div className="App">
-      <ApplicationShellProvider>
-        <ToastProvider>
-          <ApplicationShell />
-        </ToastProvider>
-      </ApplicationShellProvider>
+      <Providers>
+        <ApplicationShell />
+      </Providers>
     </div>
   );
 }
