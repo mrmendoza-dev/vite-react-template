@@ -1,9 +1,9 @@
-import { icons } from "@/assets/icons";
+import { faXmark } from "@/assets/icons";
 import { useToast } from "@/contexts/ToastContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
-const ToastPopup = ({ className, children, timerSeconds = 5 }: any) => {
+export const ToastPopup = ({ className, children, timerSeconds = 5 }: any) => {
   const { toastMessage, setToastMessage } = useToast();
   const [display, setDisplay] = useState(false);
 
@@ -49,7 +49,7 @@ const ToastPopup = ({ className, children, timerSeconds = 5 }: any) => {
             aria-label="Close"
             onClick={handleClose}
           >
-            <FontAwesomeIcon icon={icons.faXmark} className="size-5" />
+            <FontAwesomeIcon icon={faXmark} className="size-5" />
           </button>
         </div>
       </div>
@@ -58,4 +58,3 @@ const ToastPopup = ({ className, children, timerSeconds = 5 }: any) => {
   );
 };
 
-export default ToastPopup;

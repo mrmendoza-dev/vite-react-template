@@ -62,7 +62,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
-export const icons = {
+export {
   faGithub,
   faMedium,
   faYoutube,
@@ -79,7 +79,6 @@ export const icons = {
   faInstagram,
   faAppStoreIos,
   faGooglePlay,
-
   faStarFilled,
   faBookmarkFilled,
   faHeartFilled,

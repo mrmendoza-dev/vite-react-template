@@ -1,9 +1,9 @@
 
-import { icons } from "@/assets/icons";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useTheme } from "@/contexts/ThemeContext";
 
-const ThemeToggle = () => {
+export const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
 
   const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
@@ -16,7 +16,7 @@ const ThemeToggle = () => {
       onClick={toggleTheme}
     >
       <FontAwesomeIcon
-        icon={theme === "dark" ? icons.faMoon : icons.faSun}
+        icon={theme === "dark" ? faMoon : faSun}
         id={
           theme === "dark"
             ? "theme-toggle-dark-icon"
@@ -28,5 +28,3 @@ const ThemeToggle = () => {
   );
 };
 
-
-export default ThemeToggle;

@@ -1,11 +1,11 @@
-import { icons } from "@/assets/icons";
+import { faBars, faBell, faEye, faMagnifyingGlass } from "@/assets/icons";
 import { useApplicationShell } from "@/contexts/ApplicationShellContext";
 import { apps, notifications } from "@/data/defaultData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
+import { ThemeToggle } from "@/components/ApplicationShell/ThemeToggle";
 
-function Nav() {
+export const Nav = () => {
   const {
     expandedSidebar,
     setExpandedSidebar,
@@ -23,7 +23,7 @@ function Nav() {
               setExpandedSidebar(!expandedSidebar);
             }}
           >
-            <FontAwesomeIcon icon={icons.faBars} className="" />
+            <FontAwesomeIcon icon={faBars} className="" />
           </button>
 
           <Link to="/" className="flex items-center justify-between mr-4">
@@ -43,7 +43,7 @@ function Nav() {
             <div className="relative md:w-64 md:w-96">
               <div className="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                 <FontAwesomeIcon
-                  icon={icons.faMagnifyingGlass}
+                  icon={faMagnifyingGlass}
                   className="w-4 h-4 text-gray-500 dark:text-gray-400"
                 />
               </div>
@@ -68,7 +68,7 @@ function Nav() {
             <span className="sr-only">Toggle search</span>
             <FontAwesomeIcon
               aria-hidden="true"
-              icon={icons.faMagnifyingGlass}
+              icon={faMagnifyingGlass}
               className="w-5 h-5"
             />
           </button>
@@ -81,7 +81,7 @@ function Nav() {
             <span className="sr-only">View notifications</span>
             {/* <!-- Bell icon --> */}
 
-            <FontAwesomeIcon icon={icons.faBell} className="w-5 h-5" />
+            <FontAwesomeIcon icon={faBell} className="w-5 h-5" />
           </button>
           {/* <!-- Notifications Dropdown menu --> */}
           <div
@@ -135,7 +135,7 @@ function Nav() {
               <div className="inline-flex items-center">
                 <FontAwesomeIcon
                   aria-hidden="true"
-                  icon={icons.faEye}
+                  icon={faEye}
                   className="mr-2 w-4 h-4 text-gray-500 dark:text-gray-400"
                 />
                 View all
@@ -203,5 +203,3 @@ function Nav() {
     </nav>
   );
 }
-
-export default Nav;

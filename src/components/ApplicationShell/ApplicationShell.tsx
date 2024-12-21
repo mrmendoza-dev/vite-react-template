@@ -1,8 +1,8 @@
-import Main from "@/components/ApplicationShell/Main";
-import Nav from "@/components/ApplicationShell/Nav";
-import Sidebar from "@/components/ApplicationShell/Sidebar";
+import { Main } from "@/components/ApplicationShell/Main";
+import { Nav } from "@/components/ApplicationShell/Nav";
+import { Sidebar } from "@/components/ApplicationShell/Sidebar";
 
-function ApplicationShell() {
+export const ApplicationShell = () => {
   return (
     <div className="ApplicationShell antialiased flex flex-col w-screen h-screen bg-gray-50 dark:bg-gray-900 text-white">
       <Nav />
@@ -13,5 +13,3 @@ function ApplicationShell() {
     </div>
   );
 }
-
-export default ApplicationShell;

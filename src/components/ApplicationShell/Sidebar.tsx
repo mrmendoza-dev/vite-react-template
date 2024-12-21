@@ -1,13 +1,13 @@
-import { icons } from "@/assets/icons";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
 import { useApplicationShell } from "@/contexts/ApplicationShellContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
-function Sidebar() {
+export const Sidebar = () => {
   const pages = [
     {
       name: "Home",
-      icon: icons.faHouse,
+      icon: faHouse,
       link: "/",
     },
   ];
@@ -48,5 +48,3 @@ function Sidebar() {
     </aside>
   );
 }
-
-export default Sidebar;
