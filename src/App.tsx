@@ -1,4 +1,4 @@
-import { ApplicationShell } from "@/components/ApplicationShell/ApplicationShell";
+import { ApplicationShell } from "@/components/layout/ApplicationShell";
 import { Providers } from "@/contexts/Providers";
 
 function App() {
