@@ -6,10 +6,12 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 export const ApplicationShell = () => {
   return (
     <SidebarProvider>
-      <Navbar />
-      <div className="flex h-screen w-full pt-16 text-white">
-        <AppSidebar />
-        <MainContent />
+      <div className="fixed inset-0 flex flex-col">
+        <Navbar />
+        <div className="flex flex-1 overflow-hidden">
+          <AppSidebar />
+          <MainContent />
+        </div>
       </div>
     </SidebarProvider>
   );
