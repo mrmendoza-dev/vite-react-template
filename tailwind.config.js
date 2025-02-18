@@ -25,7 +25,7 @@ module.exports = {
       },
       colors: {
         ...colors,
-        gray: "colors.neutral",
+        gray: colors.neutral,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
