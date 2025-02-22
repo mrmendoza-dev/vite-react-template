@@ -1,4 +1,4 @@
-import useLocalStorage from "@/hooks/useLocalStorage";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { createContext, useContext, useState } from "react";
 const ApplicationShellContext = createContext<any>(null);
 
@@ -7,22 +7,12 @@ export const ApplicationShellProvider = ({ children }: any) => {
     "expandedSidebar",
     true
   );
-  //   const [sidebarWidths, setSidebarWidths] = useState({
-  //     expanded: 48,
-  //     collapsed: 0,
-  //   });
-  const [sidebarWidths, setSidebarWidths] = useState({
-    expanded: 14,
-    collapsed: 0,
-  });
 
   return (
     <ApplicationShellContext.Provider
       value={{
         expandedSidebar,
         setExpandedSidebar,
-        sidebarWidths,
-        setSidebarWidths,
       }}
     >
       {children}
