@@ -2,6 +2,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { Link } from "react-router-dom";
 
+
 export const Navbar = () => {
   return (
     <nav className="flex-none h-16 border-b bg-background backdrop-blur-sm z-50">
