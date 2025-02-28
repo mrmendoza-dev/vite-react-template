@@ -10,27 +10,27 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
+      includeAssets: ["favicon/favicon.ico", "favicon/apple-touch-icon.png", "favicon/masked-icon.svg"],
       manifest: {
-        name: "Your App Name",
-        short_name: "AppName",
-        description: "Your app description",
+        name: "Vite_React_Template",
+        short_name: "Vite_React_Template",
+        description: "Vite_React_Template",
         theme_color: "#ffffff",
         background_color: "#ffffff",
         display: "standalone",
         icons: [
           {
-            src: "android-chrome-192x192.png",
+            src: "favicon/android-chrome-192x192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "android-chrome-512x512.png",
+            src: "favicon/android-chrome-512x512.png",
             sizes: "512x512",
             type: "image/png",
           },
           {
-            src: "android-chrome-512x512.png",
+            src: "favicon/android-chrome-512x512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "any maskable",
