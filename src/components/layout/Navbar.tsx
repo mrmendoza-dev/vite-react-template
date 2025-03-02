@@ -1,14 +1,19 @@
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { Link } from "react-router-dom";
-
+import { useApplicationContext } from "@/contexts/ApplicationContext";
 
 export const Navbar = () => {
+  const { sidebarOpen, setSidebarOpen } = useApplicationContext();
+
   return (
     <nav className="flex-none h-16 border-b bg-background backdrop-blur-sm z-50">
       <div className="flex justify-between h-full items-center px-4 gap-4">
         <div className="flex items-center gap-2">
-          <SidebarTrigger className="text-foreground p-4" />
+          <SidebarTrigger
+            className="text-foreground p-4"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          />
           <Link to="/" className="flex items-center justify-between mr-4">
             <img src="/images/logo.png" className="mr-3 h-8" alt="App Logo" />
             <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white text-black">

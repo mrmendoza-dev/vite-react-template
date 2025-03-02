@@ -9,43 +9,89 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
 } from "@/components/ui/sidebar";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
-import React from "react";
+import {
+  Calendar,
+  Home,
+  Inbox,
+  Search,
+  Settings,
+  Camera,
+  FileText,
+  Bookmark,
+  ChevronDown,
+} from "lucide-react";
+import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Separator } from "@/components/ui/separator";
+import { Link } from "react-router-dom";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 export const AppSidebar = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
-  // Menu items.
-  const items = [
+  // Default open state for groups
+  const [openGroups, setOpenGroups] = useState({
+    Core: true,
+    Tools: true,
+    Productivity: true,
+    System: true,
+  });
+
+  // Toggle function for collapsible groups
+  const toggleGroup = (groupLabel: keyof typeof openGroups) => {
+    setOpenGroups({
+      ...openGroups,
+      [groupLabel]: !openGroups[groupLabel],
+    });
+  };
+
+  // Grouped menu items
+  const menuGroups = [
     {
-      title: "Home",
-      url: "#",
-      icon: Home,
+      label: "Core",
+      items: [
+        {
+          title: "Home",
+          url: "/",
+          icon: Home,
+        },
+      ],
     },
     {
-      title: "Inbox",
-      url: "#",
-      icon: Inbox,
+      label: "Tools",
+      items: [
+        {
+          title: "Screen Tools",
+          url: "/screen-tools",
+          icon: Camera,
+        },
+      ],
     },
     {
-      title: "Calendar",
-      url: "#",
-      icon: Calendar,
+      label: "Productivity",
+      items: [
+        {
+          title: "Notes",
+          url: "/notes",
+          icon: FileText,
+        },
+      ],
     },
     {
-      title: "Search",
-      url: "#",
-      icon: Search,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings,
+      label: "System",
+      items: [
+        {
+          title: "Settings",
+          url: "/settings",
+          icon: Settings,
+        },
+      ],
     },
   ];
-
 
   return (
     <Sidebar
@@ -53,28 +99,43 @@ export const AppSidebar = () => {
       variant={isMobile ? "floating" : "sidebar"}
       collapsible={isMobile ? "offcanvas" : "icon"}
     >
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+      <SidebarContent className="space-y-0">
+        {menuGroups.map((group) => (
+          <Collapsible
+            key={group.label}
+            open={openGroups[group.label as keyof typeof openGroups]}
+            onOpenChange={() =>
+              toggleGroup(group.label as keyof typeof openGroups)
+            }
+            className="group/collapsible w-full"
+          >
+            <SidebarGroup className="py-1">
+              <SidebarGroupLabel asChild>
+                <CollapsibleTrigger className="flex w-full items-center cursor-pointer py-1 px-2 hover:bg-foreground/5 rounded-lg">
+                  {group.label}
+                  <ChevronDown className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                </CollapsibleTrigger>
+              </SidebarGroupLabel>
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {group.items.map((item) => (
+                      <SidebarMenuItem key={item.title}>
+                        <SidebarMenuButton asChild>
+                          <Link to={item.url}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
+        ))}
       </SidebarContent>
     </Sidebar>
   );
 };
-
-
-
