@@ -1,5 +1,6 @@
 import { ApplicationShell } from "@/components/layout/ApplicationShell";
 import { Providers } from "@/contexts/Providers";
+import "@/styles/App.css";
 
 function App() {
   return (

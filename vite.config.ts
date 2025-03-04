@@ -1,16 +1,24 @@
-import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { VitePWA } from 'vite-plugin-pwa'
+import { fileURLToPath } from "url";
+import { defineConfig } from "vite";
+import { VitePWA } from "vite-plugin-pwa";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon/favicon.ico", "favicon/apple-touch-icon.png", "favicon/masked-icon.svg"],
+      includeAssets: [
+        "favicon/favicon.ico",
+        "favicon/apple-touch-icon.png",
+        "favicon/masked-icon.svg",
+      ],
       manifest: {
         name: "Vite_React_Template",
         short_name: "Vite_React_Template",
@@ -51,6 +59,7 @@ export default defineConfig({
       "@/pages": path.resolve(__dirname, "src/pages"),
       "@/services": path.resolve(__dirname, "src/services"),
       "@/styles": path.resolve(__dirname, "src/styles"),
+      "@/types": path.resolve(__dirname, "src/types"),
       "@/utils": path.resolve(__dirname, "src/utils"),
     },
   },
