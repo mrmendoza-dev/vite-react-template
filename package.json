@@ -20,6 +20,7 @@
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-label": "^2.1.2",
     "@radix-ui/react-popover": "^1.1.6",
+    "@radix-ui/react-select": "^2.1.6",
     "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slider": "^1.2.3",
     "@radix-ui/react-slot": "^1.1.2",
@@ -74,9 +75,5 @@
     "typescript": "^5.0.2",
     "vite": "^5.1.4",
     "vite-plugin-pwa": "^0.21.1"
-  },
-  "overrides": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
   }
 }
