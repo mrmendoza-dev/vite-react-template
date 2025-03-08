@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { AlertCircle, FileText, Upload, X } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 interface FileUploaderProps {
   label?: string;
@@ -25,7 +25,7 @@ export const FileUploader = ({
   className,
 }: FileUploaderProps) => {
   const [error, setError] = useState<string>("");
-  const fileInputRef: any = useState<HTMLInputElement | null>(null);
+  const fileInputRef: any = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -86,7 +86,9 @@ export const FileUploader = ({
 
       <div className="grid gap-2">
         <div className="relative">
+          {/* Add a key prop here to force re-render on file change */}
           <Input
+            key={value ? value.name : "file-input"} // force re-render when value changes
             ref={fileInputRef}
             type="file"
             accept={accept}
