@@ -42,5 +42,5 @@
       "@/utils/*": ["./src/utils/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "../../Portfolio/portfolio/backend/src/types/@mrmendozadev"]
 }

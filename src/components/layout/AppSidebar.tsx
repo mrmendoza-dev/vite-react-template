@@ -1,34 +1,22 @@
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarGroupContent,
-} from "@/components/ui/sidebar";
-import {
-  Calendar,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-  Camera,
-  FileText,
-  Bookmark,
-  ChevronDown,
-} from "lucide-react";
-import React, { useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router-dom";
-import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { Camera, ChevronDown, FileText, Home, Settings } from "lucide-react";
+import { useState } from "react";
+import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
 
 export const AppSidebar = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
