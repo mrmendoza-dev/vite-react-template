@@ -9,8 +9,13 @@ export const ApplicationShell = () => {
   const { sidebarOpen } = useApplicationContext();
 
   return (
-    <SidebarProvider defaultOpen={sidebarOpen}>
-      <div className="fixed inset-0 flex flex-col">
+    <SidebarProvider
+      defaultOpen={sidebarOpen}
+      style={{
+        ["--sidebar-width" as string]: "10em",
+      }}
+    >
+      <div className="flex flex-col h-screen w-screen bg-background text-foreground">
         <Navbar />
         <div className="flex flex-1 overflow-hidden">
           <AppSidebar />
