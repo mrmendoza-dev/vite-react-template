@@ -1,33 +1,17 @@
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { HomePage } from "@/pages/HomePage";
 import { Route, Routes } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
-import { lazy, Suspense } from "react";
-import { PageTransition } from "./PageTransition";
 
-const HomePage = lazy(() =>
-  import("@/pages/HomePage").then((m) => ({
-    default: m.HomePage,
-  }))
-);
-
-export const MainContent = () => {
+export const MainContent = ({ className }: { className?: string }) => {
   return (
-    <AnimatePresence mode="wait">
-      <main className="relative flex-1 overflow-y-auto bg-background">
-        <div className="p-4">
-          <Routes>
-            <Route
-              path="/"
-              element={<SuspenseRoute element={<HomePage />} />}
-            />
-          </Routes>
-        </div>
-      </main>
-    </AnimatePresence>
+    <main className={cn("h-full w-full relative", className)}>
+      <ScrollArea className="h-full w-full">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<HomePage />} />
+        </Routes>
+      </ScrollArea>
+    </main>
   );
 };
-
-const SuspenseRoute = ({ element }: { element: React.ReactNode }) => (
-  <Suspense fallback={<div>Loading...</div>}>
-    <PageTransition className="h-full w-full">{element}</PageTransition>
-  </Suspense>
-);
