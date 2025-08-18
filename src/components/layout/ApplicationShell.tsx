@@ -24,8 +24,9 @@ const ApplicationLayout = () => {
 export const ApplicationShell = () => {
   const { sidebarOpen } = useApplicationContext();
 
+  
   return (
-    <div className="min-h-dvh h-dvh w-dvw overflow-hidden">
+    <div className="min-h-dvh h-dvh w-full overflow-hidden">
       <ErrorBoundary label="ApplicationShell ErrorBoundary">
         <SidebarProvider
           className="h-full w-full"

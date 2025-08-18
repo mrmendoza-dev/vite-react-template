@@ -1,8 +1,6 @@
-* {
-  /* box-sizing: border-box;
-  margin: 0;
-  padding: 0; */
-}
+@import "./mobile.css";
+@import "./animations.css";
+@import "../components/shadcn.css";
 
 html {
   scroll-behavior: smooth;
@@ -18,9 +16,16 @@ body {
   font-family: "Open Sans", sans-serif;
   margin: 0;
   padding: 0;
-  overflow: auto;
   overflow-x: hidden;
   touch-action: auto;
+}
+
+/* Ensure the root fills the viewport and prevents page scroll in Chrome */
+html, body, #root {
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
 
 img {
@@ -41,13 +46,4 @@ ul {
   list-style: none;
 }
 
-input,
-textarea,
-select {
-  background-color: black;
-}
 
-/* .App {
-  height: 100vh;
-  width: 100vw;
-} */

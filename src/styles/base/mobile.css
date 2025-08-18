@@ -1,0 +1,43 @@
+
+
+
+/* Mobile viewport focus fix */
+@media (max-width: 768px) {
+  /* Prevent mobile viewport issues */
+  html,
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+  }
+
+  /* Fix ScrollArea focus on mobile */
+  [data-radix-scroll-area-viewport] {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+
+  /* Ensure proper touch handling */
+  .ScrollArea {
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  /* .App {
+    max-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+  } */
+
+
+}
+
+
+[data-radix-scroll-area-viewport] {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+[data-radix-scroll-area-viewport]::-webkit-scrollbar {
+  display: none;
+}
