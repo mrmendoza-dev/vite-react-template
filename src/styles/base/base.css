@@ -1,6 +1,6 @@
-@import "./mobile.css";
-@import "./animations.css";
-@import "../components/shadcn.css";
+@import "@/styles/base/mobile.css";
+@import "@/styles/base/animations.css";
+@import "@/styles/components/shadcn.css";
 
 html {
   scroll-behavior: smooth;

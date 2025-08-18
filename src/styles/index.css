@@ -1,5 +1,4 @@
-@import "./base/base.css";
-
+@import "@/styles/base/base.css";
 @import "tailwindcss";
 
 @plugin "tailwindcss-animate";
