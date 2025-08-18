@@ -26,7 +26,7 @@ export const ApplicationShell = () => {
 
   
   return (
-    <div className="min-h-dvh h-dvh w-full overflow-hidden">
+    <div className="min-h-dvh h-dvh w-dvw overflow-hidden">
       <ErrorBoundary label="ApplicationShell ErrorBoundary">
         <SidebarProvider
           className="h-full w-full"

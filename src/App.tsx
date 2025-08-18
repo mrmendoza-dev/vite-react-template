@@ -3,7 +3,7 @@ import { Providers } from "@/contexts/Providers";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App w-full h-full">
       <Providers>
         <ApplicationShell />
       </Providers>
