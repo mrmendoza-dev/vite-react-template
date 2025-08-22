@@ -51,7 +51,7 @@ export const AppSidebar = ({ className }: { className?: string }) => {
 
   return (
     <Sidebar
-      className={cn("h-full w-full relative", className)}
+      className={cn("h-full relative", className)}
       variant={isMobile ? "floating" : "sidebar"}
       collapsible={isMobile ? "offcanvas" : "icon"}
     >
