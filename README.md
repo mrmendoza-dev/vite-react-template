@@ -215,6 +215,7 @@ The template uses Shadcn UI for component styling. To customize:
 - Ensure the site is served over HTTPS
 - Verify service worker registration
 
+
 ## License
 MIT
 

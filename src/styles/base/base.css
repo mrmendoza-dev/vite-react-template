@@ -1,8 +1,4 @@
-@import "@/styles/base/mobile.css";
-@import "@/styles/base/animations.css";
-@import "@/styles/components/shadcn.css";
-
-
+@import "./indexCss.css";
 
 html {
   scroll-behavior: smooth;
@@ -13,21 +9,15 @@ body {
   font-family: "Open Sans", sans-serif;
   color: #fff;
   background-color: #000;
-  justify-content: center;
-  place-items: center;
-  font-family: "Open Sans", sans-serif;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  touch-action: auto;
 }
 
-/* Ensure the root fills the viewport and prevents page scroll in Chrome */
-html, body, #root {
-  height: 100%;
+/* Ensure the app can grow and fill the viewport without blocking page scroll */
+html,
+body,
+#root {
   min-height: 100%;
-  overflow: hidden;
-  overscroll-behavior: none;
 }
 
 img {
@@ -48,7 +38,6 @@ ul {
   list-style: none;
 }
 
-
 /* Scrollbar track */
 ::-webkit-scrollbar {
   width: 10px;
@@ -57,7 +46,7 @@ ul {
 
 /* Scrollbar track background */
 ::-webkit-scrollbar-track {
-    @apply bg-muted/50 rounded-md;
+  @apply bg-muted/50 rounded-md;
 }
 
 /* Scrollbar thumb (the draggable part) */
@@ -75,3 +64,22 @@ ul {
 ::-webkit-scrollbar-corner {
   @apply bg-transparent;
 }
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) transparent;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Accessible focus styles while keeping current look */
+a:hover {
+  text-decoration: underline;
+}
+

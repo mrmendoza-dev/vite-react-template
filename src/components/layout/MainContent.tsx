@@ -9,7 +9,11 @@ export const MainContent = ({
   contentClassName?: string;
 }) => {
   return (
-    <main className={cn("h-full w-full relative", className)}>
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className={cn("h-full w-full relative", className)}
+    >
       <div className={cn("min-h-full")}>
         <Routes>
           <Route path="/" element={<HomePage />} />

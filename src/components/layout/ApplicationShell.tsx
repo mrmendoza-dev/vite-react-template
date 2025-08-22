@@ -2,11 +2,25 @@ import { ErrorBoundary } from "@/components/feedback/ErrorBoundary";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { MainContent } from "@/components/layout/MainContent";
 import { Navbar } from "@/components/layout/Navbar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, useSidebar } from "@/components/ui/sidebar";
 import { useApplicationContext } from "@/contexts/ApplicationContext";
+import { useEffect, useRef } from "react";
 import { Toaster } from "sonner";
 
 const ApplicationLayout = () => {
+  const { openMobile, isMobile } = useSidebar();
+  const wasOpenRef = useRef(openMobile);
+
+  useEffect(() => {
+    if (isMobile && wasOpenRef.current && !openMobile) {
+      const main = document.getElementById(
+        "main-content"
+      ) as HTMLElement | null;
+      main?.focus();
+    }
+    wasOpenRef.current = openMobile;
+  }, [openMobile, isMobile]);
+
   return (
     <div className="min-h-dvh h-[100dvh] w-[100dvw] flex flex-col">
       {/* Navigation */}

@@ -24,3 +24,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Custom scripts
+.dev-port
+.ngrok-dev.log

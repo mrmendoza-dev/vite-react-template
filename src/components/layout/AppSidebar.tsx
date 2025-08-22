@@ -1,4 +1,12 @@
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -72,16 +80,137 @@ export const AppSidebar = ({ className }: { className?: string }) => {
         ))}
 
         <SidebarFooter className="mt-auto pb-4">
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <Link to="/settings">
-                  <Settings />
-                  <span>Settings</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
+          <Dialog>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <DialogTrigger asChild>
+                    <button type="button">
+                      <Settings />
+                      <span>Settings</span>
+                    </button>
+                  </DialogTrigger>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+            <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Settings</DialogTitle>
+                <DialogDescription>
+                  App preferences and account options.
+                </DialogDescription>
+              </DialogHeader>
+              {/* Demo content for testing */}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </SidebarFooter>
       </SidebarContent>
     </Sidebar>
