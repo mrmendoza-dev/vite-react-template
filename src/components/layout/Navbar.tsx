@@ -15,7 +15,10 @@ export const Navbar = ({ className }: { className?: string }) => {
             className="text-foreground p-4"
             onClick={() => setSidebarOpen(!sidebarOpen)}
           />
-          <Link to="/" className="flex items-center justify-between gap-2 logo-test">
+          <Link
+            to="/"
+            className="flex items-center justify-between gap-2 logo-test"
+          >
             <img src="/images/logo.png" className="h-8" alt="App Logo" />
             <span className="self-center text-base sm:text-lg font-semibold whitespace-nowrap dark:text-white text-black">
               AppName

@@ -16,10 +16,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
+import { useApplicationContext } from "@/contexts/ApplicationContext";
 import { cn } from "@/lib/utils";
 import { Home, Settings, User } from "lucide-react";
-import { useMediaQuery } from "react-responsive";
+
 import { Link } from "react-router-dom";
 
 // Grouped menu items
@@ -47,7 +49,17 @@ const menuGroups = [
 ];
 
 export const AppSidebar = ({ className }: { className?: string }) => {
-  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const { setSidebarOpen } = useApplicationContext();
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const handleClick = () => {
+    if (isMobile) {
+      // Close the mobile sheet by updating the sidebar's internal mobile state
+      setOpenMobile(false);
+      // Also update the ApplicationContext state for consistency
+      setSidebarOpen(false);
+    }
+  };
 
   return (
     <Sidebar
@@ -67,7 +79,7 @@ export const AppSidebar = ({ className }: { className?: string }) => {
                 {group.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton asChild>
-                      <Link to={item.url}>
+                      <Link to={item.url} onClick={handleClick}>
                         <item.icon />
                         <span>{item.title}</span>
                       </Link>
@@ -85,7 +97,7 @@ export const AppSidebar = ({ className }: { className?: string }) => {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <DialogTrigger asChild>
-                    <button type="button">
+                    <button type="button" >
                       <Settings />
                       <span>Settings</span>
                     </button>
@@ -125,6 +137,12 @@ export const AppSidebar = ({ className }: { className?: string }) => {
                   your settings form here.
                 </div>
               </div>
+              <div className="space-y-3">
+                <div className="text-sm text-muted-foreground">
+                  This is a demo Settings dialog opened from the sidebar. Add
+                  your settings form here.
+                </div>
+              </div>{" "}
               <div className="space-y-3">
                 <div className="text-sm text-muted-foreground">
                   This is a demo Settings dialog opened from the sidebar. Add

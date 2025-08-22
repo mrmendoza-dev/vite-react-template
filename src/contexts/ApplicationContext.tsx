@@ -1,11 +1,5 @@
-import {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-  ReactNode,
-} from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { ReactNode, createContext, useContext } from "react";
 
 interface ApplicationContextType {
   sidebarOpen: boolean;

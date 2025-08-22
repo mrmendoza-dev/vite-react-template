@@ -39,14 +39,15 @@ const ApplicationLayout = () => {
 };
 
 export const ApplicationShell = () => {
-  const { sidebarOpen } = useApplicationContext();
+  const { sidebarOpen, setSidebarOpen } = useApplicationContext();
 
   return (
     <div className="h-full w-full overflow-hidden">
       <ErrorBoundary label="ApplicationShell ErrorBoundary">
         <SidebarProvider
           className="w-full"
-          defaultOpen={sidebarOpen}
+          open={sidebarOpen}
+          onOpenChange={setSidebarOpen}
           style={{
             ["--sidebar-width" as string]: "10em",
             // ["--sidebar-width-icon" as string]: "0rem",

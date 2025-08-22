@@ -1,6 +1,5 @@
-import { ThemeProvider } from "@/contexts/ThemeContext";
 import { ApplicationProvider } from "@/contexts/ApplicationContext";
-
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
