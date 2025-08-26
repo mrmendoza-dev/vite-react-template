@@ -14,7 +14,7 @@ export const MainContent = ({
       tabIndex={-1}
       className={cn("h-full w-full relative", className)}
     >
-      <div className={cn("min-h-full")}>
+      <div className="min-h-full">
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="*" element={<HomePage />} />

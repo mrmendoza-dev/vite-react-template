@@ -81,7 +81,7 @@ export const FileUploader = ({
   const acceptedTypes = formatAcceptedTypes(accept);
 
   return (
-    <div className={cn("space-y-2", className)}>
+    <div className={cn("flex flex-col gap-2", className)}>
       {label && <Label>{label}</Label>}
 
       <div className="grid gap-2">

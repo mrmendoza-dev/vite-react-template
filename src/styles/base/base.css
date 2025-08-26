@@ -34,7 +34,7 @@ button {
   cursor: pointer;
 }
 
-ul {
+li, ul, ol {
   list-style: none;
 }
 
