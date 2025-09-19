@@ -42,5 +42,6 @@
       "@/utils/*": ["./src/utils/*"]
     }
   },
-  "include": ["src", "tests"]
+  "include": ["src"],
+  "exclude": ["tests"]
 }
