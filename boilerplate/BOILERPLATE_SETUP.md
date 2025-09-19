@@ -41,3 +41,4 @@ npm install
 
 
 # Delete this /boilerplate folder after setup is complete
+- Delete README-Changelog.md
