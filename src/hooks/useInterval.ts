@@ -1,18 +1,22 @@
-
 import { useEffect, useRef } from "react";
 
-const useInterval = (callback: any, delay = 30000, dependencies = []) => {
-  const savedCallback: any = useRef();
+type VoidFunction = () => void;
 
+export const useInterval = (
+  callback: VoidFunction,
+  delay: number | null = 30000,
+  dependencies: unknown[] = []
+): void => {
+  const savedCallback = useRef<VoidFunction>(() => {});
 
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
   useEffect(() => {
-    function tick() {
+    const tick = () => {
       savedCallback.current();
-    }
+    };
 
     if (delay !== null) {
       const id = setInterval(tick, delay);
@@ -22,4 +26,3 @@ const useInterval = (callback: any, delay = 30000, dependencies = []) => {
 };
 
 export default useInterval;
-

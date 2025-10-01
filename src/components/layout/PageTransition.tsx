@@ -1,6 +1,6 @@
 // src/components/PageTransition.tsx
+import { motion, type Transition } from "framer-motion";
 import { FC, ReactNode } from "react";
-import { motion } from "framer-motion";
 
 type AnimationType = "slide" | "fade" | "scale" | "rotate" | "flip" | "slideUp";
 
@@ -67,12 +67,11 @@ export const PageTransition: FC<PageTransitionProps> = ({
     slideUp: slideUpVariants,
   };
 
-  // Base transition settings
-  const pageTransition = {
+  // Base transition settings compatible with Framer Motion v12
+  const pageTransition: Transition = {
     type: "tween",
     ease: "anticipate",
     duration: 0.4,
-    exit: {},
   };
 
   return (
