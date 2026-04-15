@@ -1,36 +1,30 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ],
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "module": "ESNext",
-    "skipLibCheck": true,
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+
+    "types": ["bun", "vite/client"],
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "skipLibCheck": true,
 
-    /* Linting */
-    "strict": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": false, // Change to false to ignore unused locals
-    "noUnusedParameters": false, // Change to false to ignore unused parameters
-
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@server/*": ["./server/*"]
-    }
+    },
+
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "ignoreDeprecations": "6.0"
   },
-  "include": ["src"],
-  "exclude": ["tests"]
+  "include": ["src", "server", "tests", "vite.config.ts", "drizzle.config.ts"],
+  "exclude": ["node_modules", "dist"]
 }

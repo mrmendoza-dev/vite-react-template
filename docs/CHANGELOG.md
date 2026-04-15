@@ -15,6 +15,8 @@ Stack alignment with [REPO-MODERNIZATION.md](./REPO-MODERNIZATION.md) (April 202
 - **Base UI** — Component primitive direction aligned with React 19 (replaces Radix-first assumptions in older templates).
 - **Turborepo** — Cached, parallel `lint` / `test` / `build` (and dev/server orchestration) instead of ad hoc parallel shell scripts.
 - **Biome** — Single lint + format + import assist toolchain; replaces ESLint, `@typescript-eslint/*`, and formatting-only Prettier; Tailwind v4 directives supported in CSS via Biome parser options.
+- **Drizzle ORM** — SQL schema and migrations (`server/db/`, `drizzle.config.ts`); default SQLite via `bun:sqlite`, `DATABASE_PATH` for location; scripts `db:generate`, `db:push`, `db:studio`.
+- **TanStack Query** — `@tanstack/react-query` with a shared client (`src/lib/query-client.ts`) and provider in `src/contexts/Providers.tsx` for server state and Eden-backed `queryFn`s.
 
 ## v1.0.0
 

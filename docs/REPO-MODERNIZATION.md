@@ -1,6 +1,6 @@
 # Repo modernization
 
-- April 14, 2026
+- April 14, 2026 (updated April 15, 2026)
 
 This document describes the **shift in paradigms** for this template: from a Node- and 2020-era JS toolchain to a Bun-first, web-standards stack with React 19. It is not an exhaustive file manifest—use git history for line-by-line diffs.
 
@@ -13,7 +13,8 @@ This document describes the **shift in paradigms** for this template: from a Nod
 | Runtime & installs | Node as the default runtime; npm-centric config (e.g. npm-only flags in `.npmrc`). |
 | Frontend | React 18–style assumptions; older bundler ergonomics; heavier Tailwind v3 + big `tailwind.config` workflows. |
 | UI primitives | Radix as the default headless layer behind shadcn-style components. |
-| API | Express-style Node servers and hand-rolled JS entrypoints. |
+| API & data | Express-style Node servers, hand-rolled JS entrypoints, and ad hoc SQL or no migration story. |
+| Frontend data | `useEffect` + `fetch` for server state, or ad hoc caching. |
 | Quality | Split ESLint + Prettier (and plugins) for lint vs format. |
 | Multi-task dev | Shell glue or **concurrently**-style “run two processes” without a real task graph or cache. |
 
@@ -27,7 +28,8 @@ This document describes the **shift in paradigms** for this template: from a Nod
 | Frontend | **React 19** + **Vite 8** (Rolldown-era bundling, fast HMR, `ref` as a normal prop where applicable). |
 | Styling | **Tailwind v4** via Vite plugin: CSS-first `@import "tailwindcss"`, `@theme` / variables, optional `tailwindDirectives` in Biome—no mandatory fat Tailwind config file. |
 | UI primitives | **Base UI** under the hood for shadcn “base-nova” style components (`@base-ui/react`). |
-| API | **Elysia** on Bun: composable app (`server/app.ts`), typed `App` export, CORS, routes as modules—**not** Express. **Eden** (`@elysiajs/eden` Treaty client in `src/lib/api-client.ts`) uses that type for end-to-end calls (`VITE_API_URL`). |
+| API & data | **Elysia** on Bun: composable app (`server/app.ts`), typed `App` export, CORS, routes as modules—**not** Express. **Eden** (`@elysiajs/eden` Treaty client in `src/lib/api-client.ts`) uses that type for end-to-end calls (`VITE_API_URL`). **Drizzle ORM** with **Bun `bun:sqlite`**: schema in `server/db/schema.ts`, migrations in `server/db/migrations/`, `drizzle.config.ts` at repo root; default file DB under `data/dev.db` (override with `DATABASE_PATH`). |
+| Frontend data | **TanStack Query** (`@tanstack/react-query`): shared `QueryClient` in `src/lib/query-client.ts`, `QueryClientProvider` in `src/contexts/Providers.tsx`—use for server state, cache, and request lifecycle (Eden/fetch in `queryFn`). |
 | Quality | **Biome** single toolchain: `biome check`, `biome ci`, import organize, React rules domain. |
 | CI / orchestration | **Turborepo** for `lint` / `test` / `build` (and parallel dev + server): cache, task graph, prefixed logs—**no** leftover concurrently dependency. |
 
@@ -35,10 +37,10 @@ This document describes the **shift in paradigms** for this template: from a Nod
 
 ## How the repo reflects that (high level)
 
-- **Server:** TypeScript-only tree (`server/*.ts`): factory for the Elysia app, env helpers, typed routes; entry listens with Bun.
-- **Client:** Vite + React 19; global styles consolidated through a v4-oriented CSS entry (e.g. `src/styles/index.css`) plus existing base/theme layers where still useful.
+- **Server:** TypeScript-only tree (`server/*.ts`): factory for the Elysia app, env helpers, typed routes; **Drizzle** client + migrator wired from `server/db`; entry listens with Bun and runs migrations before serving.
+- **Client:** Vite + React 19; global styles consolidated through a v4-oriented CSS entry (e.g. `src/styles/index.css`) plus existing base/theme layers where still useful; **TanStack Query** wraps the app for data fetching (see `HomePage` health strip as a minimal example).
 - **Components:** Expanded shadcn/ui kit under `src/components/ui/`, aligned with Base UI and Tailwind v4 tokens.
-- **Tests:** Vitest + Testing Library; Bun-oriented preloads where needed; server smoke tests under `tests/server/`.
+- **Tests:** Vitest + Testing Library; Bun-oriented preloads where needed; server tests under `tests/server/` (Drizzle + SQLite uses **`bun:test`** in `*.bun.test.ts` because Vitest’s bundle does not load `bun:sqlite`; `npm test` / `bun run test` runs Vitest then those Bun tests).
 - **Docs:** Changelog and this spec live under `docs/` (root changelog narrative retired in favor of `docs/CHANGELOG.md`).
 
 Legacy editor-only or npm-only artifacts (old ESLint config, npmrc quirks, ad hoc VS Code task files) were dropped in favor of **scripts + Biome + Turbo**.

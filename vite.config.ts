@@ -1,13 +1,7 @@
-/// <reference types="vitest" />
-
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
-import { defineConfig } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { defineConfig } from "vitest/config";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -16,6 +10,8 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
+      injectRegister: "auto",
+      pwaAssets: { disabled: false, config: true },
       includeAssets: [
         "favicon/favicon.ico",
         "favicon/apple-touch-icon.png",
@@ -52,18 +48,25 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: "./tests/setupTests.js",
-    include: ["tests/**/*.test.{js,jsx,ts,tsx}"],
+    setupFiles: "./tests/setupTests.ts",
+    include: ["tests/**/*.test.{ts,tsx}"],
+    // Optimized for Bun's native test runner if needed
+    exclude: ["node_modules", "dist", "**/*.bun.test.ts"],
   },
   server: {
     host: true,
     port: 3000,
-    allowedHosts: ["localhost", "127.0.0.1", "0.0.0.0", ".ngrok-free.app"],
+    // Security: Restrict allowed hosts to your specific workflow
+    allowedHosts: [".ngrok-free.app", "localhost", "127.0.0.1"],
+    // 2026 Feature: Forward browser logs to your terminal
+    forwardConsole: true,
+  },
+  build: {
+    // Rolldown (Vite 8) is 10-30x faster.
+    // We keep this thin to let the new Rust engine do the work.
+    target: "esnext",
   },
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-      "@server": path.resolve(__dirname, "server"),
-    },
+    tsconfigPaths: true,
   },
 });

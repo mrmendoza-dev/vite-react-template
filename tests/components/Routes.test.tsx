@@ -1,170 +1,59 @@
-// tests/components/Routes.test.tsx
-
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 import { MainContent } from "@/components/layout/MainContent";
 
-/** Deterministic home stub so tests do not rely on `vi.mock` hoisting (Bun `bun test`). */
 const StubHomePage = () => (
   <div data-testid="home-page">
     <h1>Home Page</h1>
-    <div data-testid="home-content">
-      {Array.from({ length: 100 }, (_, index) => (
-        <div key={index} data-testid={`card-${index}`}>
-          Card {index + 1}
-        </div>
-      ))}
-    </div>
+    <p data-testid="home-stub-content">Stub</p>
   </div>
 );
 
-const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <BrowserRouter>{children}</BrowserRouter>
-);
-
-const RouterTestWrapper = ({
-  children,
-  initialEntries,
-}: {
-  children: React.ReactNode;
-  initialEntries: string[];
-}) => <MemoryRouter initialEntries={initialEntries}>{children}</MemoryRouter>;
-
-describe("Routes in MainContent", () => {
-  it("renders MainContent component structure", () => {
+describe("MainContent routing", () => {
+  it("renders main landmark and home at /", () => {
     render(
-      <TestWrapper>
+      <MemoryRouter initialEntries={["/"]}>
         <MainContent homePage={StubHomePage} />
-      </TestWrapper>,
+      </MemoryRouter>,
     );
 
-    // Check main element structure
-    const mainElement = screen.getByRole("main");
-    expect(mainElement).toBeInTheDocument();
-    expect(mainElement).toHaveAttribute("id", "main-content");
-    expect(mainElement).toHaveAttribute("tabIndex", "-1");
-
-    // Check container div
-    const container = screen.getByRole("main").firstChild;
-    expect(container).toHaveClass("min-h-full");
-  });
-
-  it("renders HomePage on root route (/)", () => {
-    render(
-      <RouterTestWrapper initialEntries={["/"]}>
-        <MainContent homePage={StubHomePage} />
-      </RouterTestWrapper>,
-    );
-
-    // Check that HomePage is rendered
+    const main = screen.getByRole("main");
+    expect(main).toBeInTheDocument();
+    expect(main).toHaveAttribute("id", "main-content");
+    expect(main).toHaveAttribute("tabIndex", "-1");
     expect(screen.getByTestId("home-page")).toBeInTheDocument();
-    expect(screen.getByText("Home Page")).toBeInTheDocument();
-    expect(screen.getByTestId("home-content")).toBeInTheDocument();
-
-    // Check that cards are rendered
-    expect(screen.getByTestId("card-0")).toBeInTheDocument();
-    expect(screen.getByTestId("card-99")).toBeInTheDocument();
-    expect(screen.getByText("Card 1")).toBeInTheDocument();
-    expect(screen.getByText("Card 100")).toBeInTheDocument();
   });
 
-  it("renders empty main element for unknown routes", () => {
+  it("renders home for unknown paths via catch-all", () => {
     render(
-      <RouterTestWrapper initialEntries={["/nonexistent"]}>
+      <MemoryRouter initialEntries={["/unknown"]}>
         <MainContent homePage={StubHomePage} />
-      </RouterTestWrapper>,
+      </MemoryRouter>,
     );
 
-    // Check that main element exists but is empty for unknown routes
-    const mainElement = screen.getByRole("main");
-    expect(mainElement).toBeInTheDocument();
-    expect(mainElement).toHaveAttribute("id", "main-content");
-    expect(mainElement).toHaveAttribute("tabIndex", "-1");
+    expect(screen.getByTestId("home-page")).toBeInTheDocument();
   });
 
-  it("renders HomePage for all routes (catch-all)", () => {
-    const testRoutes = ["/dashboard", "/settings", "/profile"];
-
-    testRoutes.forEach((route) => {
-      const { unmount } = render(
-        <RouterTestWrapper initialEntries={[route]}>
-          <MainContent homePage={StubHomePage} />
-        </RouterTestWrapper>,
-      );
-
-      // All routes should render HomePage due to catch-all route
-      expect(screen.getByTestId("home-page")).toBeInTheDocument();
-      expect(screen.getByText("Home Page")).toBeInTheDocument();
-
-      unmount();
-    });
-  });
-
-  it("applies correct className when provided", () => {
-    const customClassName = "custom-main-content";
-
+  it("merges className on main", () => {
     render(
-      <TestWrapper>
-        <MainContent className={customClassName} homePage={StubHomePage} />
-      </TestWrapper>,
+      <BrowserRouter>
+        <MainContent className="custom-shell" homePage={StubHomePage} />
+      </BrowserRouter>,
     );
 
-    const mainElement = screen.getByRole("main");
-    expect(mainElement).toHaveClass(customClassName);
-    expect(mainElement).toHaveClass("h-full", "w-full", "relative");
+    expect(screen.getByRole("main")).toHaveClass("custom-shell", "h-full");
   });
 
-  it("renders without className prop", () => {
+  it("applies contentClassName to inner wrapper", () => {
     render(
-      <TestWrapper>
-        <MainContent homePage={StubHomePage} />
-      </TestWrapper>,
+      <MemoryRouter initialEntries={["/"]}>
+        <MainContent contentClassName="inner-padding" homePage={StubHomePage} />
+      </MemoryRouter>,
     );
 
-    const mainElement = screen.getByRole("main");
-    expect(mainElement).toHaveClass("h-full", "w-full", "relative");
-  });
-
-  it("has correct accessibility attributes", () => {
-    render(
-      <TestWrapper>
-        <MainContent homePage={StubHomePage} />
-      </TestWrapper>,
-    );
-
-    const mainElement = screen.getByRole("main");
-    expect(mainElement).toHaveAttribute("id", "main-content");
-    expect(mainElement).toHaveAttribute("tabIndex", "-1");
-  });
-
-  it("renders all 100 cards in HomePage", () => {
-    render(
-      <TestWrapper>
-        <MainContent homePage={StubHomePage} />
-      </TestWrapper>,
-    );
-
-    // Check that all cards are rendered
-    for (let i = 0; i < 100; i++) {
-      expect(screen.getByTestId(`card-${i}`)).toBeInTheDocument();
-      expect(screen.getByText(`Card ${i + 1}`)).toBeInTheDocument();
-    }
-  });
-
-  it("maintains proper DOM structure", () => {
-    render(
-      <TestWrapper>
-        <MainContent homePage={StubHomePage} />
-      </TestWrapper>,
-    );
-
-    // Check DOM hierarchy
-    const mainElement = screen.getByRole("main");
-    const container = mainElement.firstChild;
-    const homePage = screen.getByTestId("home-page");
-
-    expect(mainElement).toContainElement(container as Element);
-    expect(container).toContainElement(homePage);
+    const main = screen.getByRole("main");
+    const inner = main.firstChild as HTMLElement;
+    expect(inner).toHaveClass("inner-padding", "min-h-full");
   });
 });

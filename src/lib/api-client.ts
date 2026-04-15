@@ -12,5 +12,5 @@ export const getApiOrigin = (): string => {
   return defaultDevOrigin;
 };
 
-/** Eden Treaty client — routes and response types come from `App`. */
+/** Eden Treaty client — routes and response types come from `App` (use `api.api.…` for the `/api` group). */
 export const api = treaty<App>(getApiOrigin());

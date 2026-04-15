@@ -12,6 +12,7 @@ export type MainContentProps = {
 
 export const MainContent = ({
   className,
+  contentClassName,
   homePage: HomePageSlot = HomePage,
 }: MainContentProps) => {
   return (
@@ -20,7 +21,7 @@ export const MainContent = ({
       tabIndex={-1}
       className={cn("h-full w-full relative", className)}
     >
-      <div className="min-h-full">
+      <div className={cn("min-h-full", contentClassName)}>
         <Routes>
           <Route path="/" element={<HomePageSlot />} />
           <Route path="*" element={<HomePageSlot />} />

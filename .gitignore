@@ -42,6 +42,10 @@ bun-debug.log*
 # Local scratch
 .local/
 
+# SQLite (Drizzle dev DB — path overridable via DATABASE_PATH)
+data/
+*.db
+
 # Python (optional scripts)
 __pycache__/
 *.pyc
