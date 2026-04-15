@@ -1,6 +1,6 @@
-import { ErrorGeneric } from "@/components/feedback/ErrorGeneric";
 // import * as Sentry from "@sentry/react";
-import React, { ErrorInfo } from "react";
+import React, { type ErrorInfo } from "react";
+import { ErrorGeneric } from "@/components/feedback/ErrorGeneric";
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ export class ErrorBoundary extends React.Component<
   ErrorBoundaryProps,
   { hasError: boolean; error: Error | null; errorInfo?: ErrorInfo }
 > {
-  constructor(props: any) {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null };
   }
@@ -40,7 +40,7 @@ export class ErrorBoundary extends React.Component<
   };
 
   render() {
-    const { hasError, error } = this.state;
+    const { hasError } = this.state;
     if (hasError) {
       return <ErrorGeneric />;
     }

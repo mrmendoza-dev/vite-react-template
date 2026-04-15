@@ -26,20 +26,9 @@
     "noUnusedLocals": false, // Change to false to ignore unused locals
     "noUnusedParameters": false, // Change to false to ignore unused parameters
 
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@/assets/*": ["./src/assets/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/contexts/*": ["./src/contexts/*"],
-      "@/data/*": ["./src/data/*"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/lib/*": ["./src/lib/*"],
-      "@/pages/*": ["./src/pages/*"],
-      "@/services/*": ["./src/services/*"],
-      "@/styles/*": ["./src/styles/*"],
-      "@/types/*": ["./src/types/*"],
-      "@/utils/*": ["./src/utils/*"]
+      "@server/*": ["./server/*"]
     }
   },
   "include": ["src"],

@@ -5,7 +5,7 @@ type VoidFunction = () => void;
 export const useInterval = (
   callback: VoidFunction,
   delay: number | null = 30000,
-  dependencies: unknown[] = []
+  dependencies: unknown[] = [],
 ): void => {
   const savedCallback = useRef<VoidFunction>(() => {});
 

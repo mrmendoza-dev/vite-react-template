@@ -1,4 +1,3 @@
-
 .fade-enter {
   opacity: 0;
 }
@@ -13,5 +12,3 @@
   opacity: 0;
   transition: opacity 300ms ease-in;
 }
-
-

@@ -6,7 +6,7 @@ IN DEVELOPMENT
 ## Assumptions:
 - This is specifically for Vite React projects.
 - Tailwind CSS v4 is used, meaning no tailwind.config.js file is needed.
-- Shadcn UI and Radix UI are used for base components.
+- Shadcn UI and Base UI are used for base components.
 
 ## Delete previous .git folder
 ```bash

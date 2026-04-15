@@ -12,7 +12,7 @@ A modern, feature-rich starter template for React applications built with Vite, 
 - Application shell with responsive layout
 - Font Awesome icons integration
 - PWA ready with offline capabilities
-- Express.js backend setup with basic routing
+- Elysia (Bun) backend with basic routing
 - File structure optimized for scalability
 - Context API setup for state management
 - Custom hooks for common functionality
@@ -54,7 +54,7 @@ yarn
 ### Create a `.env` file in the root directory:
 
 ```env
-VITE_PORT=3030
+SERVER_PORT=3030
 VITE_API_URL=http://localhost:3030
 ```
 
@@ -70,8 +70,8 @@ yarn start
 
 This will run:
 
-- **Frontend:** [http://localhost:5173](http://localhost:5173) (Vite's default port)
-- **Backend:** [http://localhost:3030](http://localhost:3030)
+- **Frontend:** Vite dev server (see `vite.config.ts` `server.port`, often `3000` or `5173`)
+- **Backend API:** [http://localhost:3030/api](http://localhost:3030/api) (override with `SERVER_PORT`)
 
 ## Development
 
@@ -116,8 +116,11 @@ react-vite-template/
 │   ├── images/            # Public images
 │   ├── _redirects         # Netlify redirects
 │   └── robots.txt         # SEO robots file
-├── server/                # Backend server code
-│   ├── routes/            # Express routes
+├── server/                # Elysia (Bun) API
+│   ├── app.ts             # App factory (CORS, route plugins)
+│   ├── env.ts             # Port / env helpers
+│   ├── index.ts           # Entry (listen)
+│   ├── routes/            # Route modules
 │   └── utils/             # Server utilities
 ├── src/                   # Frontend source code
 │   ├── assets/            # Frontend assets
@@ -139,10 +142,11 @@ react-vite-template/
 
 ## Environment Variables
 
-| Variable     | Description         | Required |
-| ------------ | ------------------- | -------- |
-| VITE_PORT    | Backend server port | Yes      |
-| VITE_API_URL | API base URL        | Yes      |
+| Variable      | Description                          | Required |
+| ------------- | ------------------------------------ | -------- |
+| SERVER_PORT   | Elysia (Bun) API port                | No       |
+| PORT          | Fallback for API port (e.g. hosting) | No       |
+| VITE_API_URL  | API base URL for the frontend        | No       |
 
 ## Tech Stack
 
@@ -159,15 +163,16 @@ react-vite-template/
 
 ### Backend:
 
-- Express.js
-- Node.js
+- Elysia
+- Bun
+- [@elysiajs/eden](https://elysiajs.com/eden/overview.html) Treaty client (`src/lib/api-client.ts`, `import type` from `server/app`)
 
 ### Development Tools:
 
-- ESLint
+- Biome (lint + format)
 - TypeScript
 - PWA plugin for Vite
-- Concurrently (for running multiple scripts)
+- Turbo (build tool)
 - Vitest (testing framework)
 - React Testing Library
 - jsdom (test environment)
@@ -286,6 +291,6 @@ MIT
 - React
 - TailwindCSS
 - Shadcn UI
-- Express.js
+- Elysia
 - Vitest
 - React Testing Library

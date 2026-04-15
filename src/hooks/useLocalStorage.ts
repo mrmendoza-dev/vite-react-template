@@ -1,11 +1,17 @@
 import { useState } from "react";
 
-export const useLocalStorage = (
+type StoredPayload<T> = { value: T; expiry?: number };
+
+export const useLocalStorage = <T>(
   key: string,
-  initialValue: any,
-  ttl?: number
-) => {
-  const [storedValue, setStoredValue] = useState(() => {
+  initialValue: T,
+  ttl?: number,
+): [
+  T,
+  (value: T | ((prev: T) => T), customTtl?: number) => void,
+  () => void,
+] => {
+  const [storedValue, setStoredValue] = useState<T>(() => {
     if (typeof window === "undefined") {
       return initialValue;
     }
@@ -17,21 +23,35 @@ export const useLocalStorage = (
         return initialValue;
       }
 
-      const parsedItem = JSON.parse(item);
+      const parsedItem = JSON.parse(item) as StoredPayload<T> | T;
 
-      if (parsedItem.expiry && new Date().getTime() > parsedItem.expiry) {
+      if (
+        typeof parsedItem === "object" &&
+        parsedItem !== null &&
+        "expiry" in parsedItem &&
+        typeof parsedItem.expiry === "number" &&
+        Date.now() > parsedItem.expiry
+      ) {
         window.localStorage.removeItem(key);
         return initialValue;
       }
 
-      return parsedItem.value ?? parsedItem;
+      if (
+        typeof parsedItem === "object" &&
+        parsedItem !== null &&
+        "value" in parsedItem
+      ) {
+        return parsedItem.value as T;
+      }
+
+      return parsedItem as T;
     } catch (error) {
       console.error(error);
       return initialValue;
     }
   });
 
-  const setValue = (value: any, customTtl?: number) => {
+  const setValue = (value: T | ((prev: T) => T), customTtl?: number) => {
     if (typeof window === "undefined") {
       console.warn("localStorage is not available in the current environment");
       return;
@@ -43,17 +63,12 @@ export const useLocalStorage = (
 
       const effectiveTtl = customTtl ?? ttl;
 
-      let itemToStore;
-
-      if (effectiveTtl) {
-        const now = new Date().getTime();
-        itemToStore = {
-          value: valueToStore,
-          expiry: now + effectiveTtl,
-        };
-      } else {
-        itemToStore = { value: valueToStore };
-      }
+      const itemToStore: StoredPayload<T> = effectiveTtl
+        ? {
+            value: valueToStore,
+            expiry: Date.now() + effectiveTtl,
+          }
+        : { value: valueToStore };
 
       setStoredValue(valueToStore);
       window.localStorage.setItem(key, JSON.stringify(itemToStore));

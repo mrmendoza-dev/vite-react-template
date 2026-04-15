@@ -1,8 +1,8 @@
+import { Link } from "react-router-dom";
 import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useApplicationContext } from "@/contexts/ApplicationContext";
 import { cn } from "@/lib/utils";
-import { Link } from "react-router-dom";
 
 export const Navbar = ({ className }: { className?: string }) => {
   const { sidebarOpen, setSidebarOpen } = useApplicationContext();

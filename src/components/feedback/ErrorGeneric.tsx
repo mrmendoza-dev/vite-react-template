@@ -1,7 +1,7 @@
+import { CircleX } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ErrorPage } from "@/components/feedback/ErrorPage";
 import { Button } from "@/components/ui/button";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-import { CircleX } from "lucide-react";
 
 export const ErrorGeneric = () => {
   const navigate = useNavigate();

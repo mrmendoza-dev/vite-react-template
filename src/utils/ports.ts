@@ -51,7 +51,7 @@ const PORT_RANGES = {
 };
 
 // Example usage in config files
-const config = {
+const _config = {
   development: {
     frontend: PORT_RANGES.VERY_SAFE.FRONTEND[0], // 8080
     backend: PORT_RANGES.VERY_SAFE.BACKEND[0], // 8000

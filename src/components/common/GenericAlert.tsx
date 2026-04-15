@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import clsx from "clsx";
 import { AlertCircle, AlertTriangle, CheckCircle, Info } from "lucide-react";
-import React from "react";
+import type React from "react";
 
 const alertVariants = cva(
   "w-fit flex items-center gap-2 rounded-lg border p-2",
@@ -10,8 +10,7 @@ const alertVariants = cva(
       variant: {
         warning:
           "bg-warning text-warning-foreground border-warning-foreground/20",
-        error:
-          "bg-error text-error-foreground border-error-foreground/20",
+        error: "bg-error text-error-foreground border-error-foreground/20",
         success:
           "bg-success text-success-foreground border-success-foreground/20",
         info: "bg-info text-info-foreground border-info-foreground/20",
@@ -20,7 +19,7 @@ const alertVariants = cva(
     defaultVariants: {
       variant: "info",
     },
-  }
+  },
 );
 
 const icons = {

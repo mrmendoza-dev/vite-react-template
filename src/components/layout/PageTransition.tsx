@@ -1,6 +1,6 @@
 // src/components/PageTransition.tsx
 import { motion, type Transition } from "framer-motion";
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 
 type AnimationType = "slide" | "fade" | "scale" | "rotate" | "flip" | "slideUp";
 

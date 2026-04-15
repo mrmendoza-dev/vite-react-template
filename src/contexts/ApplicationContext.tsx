@@ -1,5 +1,5 @@
+import { createContext, type ReactNode, useContext } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { ReactNode, createContext, useContext } from "react";
 
 interface ApplicationContextType {
   sidebarOpen: boolean;
@@ -12,7 +12,7 @@ export const useApplicationContext = () => {
   const context = useContext(ApplicationContext);
   if (!context) {
     throw new Error(
-      "useApplicationContext must be used within an ApplicationProvider"
+      "useApplicationContext must be used within an ApplicationProvider",
     );
   }
   return context;

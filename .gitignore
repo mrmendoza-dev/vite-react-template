@@ -1,3 +1,19 @@
+# Dependencies
+node_modules
+
+# Build / orchestration
+dist
+dist-ssr
+.turbo
+*.tsbuildinfo
+
+# Tests
+coverage
+
+# Environment & secrets
+.env
+*.local
+
 # Logs
 logs
 *.log
@@ -6,16 +22,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+bun-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-.env
-
-# Editor directories and files
+# Editors / OS
 .vscode/*
-!.vscode/tasks.json
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -25,21 +35,20 @@ dist-ssr
 *.sln
 *.sw?
 
-# Custom
-crashlytics-build.properties
-firebase-debug.log
+# Host CLIs (local link / cache state)
+.netlify
+.vercel
 
-# Local build and staging
+# Local scratch
 .local/
-.fusebox/
 
-# Python junk (just in case)
+# Python (optional scripts)
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 
-# Ignore package manager stores
-/.package-lock.json
-/.yarn-integrity
-/.env.test
+# Other package managers at repo root (this repo uses bun.lock)
+/package-lock.json
+/yarn.lock
+/pnpm-lock.yaml

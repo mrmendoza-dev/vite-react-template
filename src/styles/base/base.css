@@ -33,7 +33,9 @@ button {
   cursor: pointer;
 }
 
-li, ul, ol {
+li,
+ul,
+ol {
   list-style: none;
 }
 
@@ -81,4 +83,3 @@ li, ul, ol {
 a:hover {
   text-decoration: underline;
 }
-

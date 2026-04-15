@@ -1,24 +1,23 @@
 // tests/components/Routes.test.tsx
-import { MainContent } from "@/components/layout/MainContent";
+
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
+import { MainContent } from "@/components/layout/MainContent";
 
-// Mock the HomePage component (which is the actual root route)
-vi.mock("@/pages/HomePage", () => ({
-  HomePage: () => (
-    <div data-testid="home-page">
-      <h1>Home Page</h1>
-      <div data-testid="home-content">
-        {Array.from({ length: 100 }, (_, index) => (
-          <div key={index} data-testid={`card-${index}`}>
-            Card {index + 1}
-          </div>
-        ))}
-      </div>
+/** Deterministic home stub so tests do not rely on `vi.mock` hoisting (Bun `bun test`). */
+const StubHomePage = () => (
+  <div data-testid="home-page">
+    <h1>Home Page</h1>
+    <div data-testid="home-content">
+      {Array.from({ length: 100 }, (_, index) => (
+        <div key={index} data-testid={`card-${index}`}>
+          Card {index + 1}
+        </div>
+      ))}
     </div>
-  ),
-}));
+  </div>
+);
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <BrowserRouter>{children}</BrowserRouter>
@@ -36,8 +35,8 @@ describe("Routes in MainContent", () => {
   it("renders MainContent component structure", () => {
     render(
       <TestWrapper>
-        <MainContent />
-      </TestWrapper>
+        <MainContent homePage={StubHomePage} />
+      </TestWrapper>,
     );
 
     // Check main element structure
@@ -54,8 +53,8 @@ describe("Routes in MainContent", () => {
   it("renders HomePage on root route (/)", () => {
     render(
       <RouterTestWrapper initialEntries={["/"]}>
-        <MainContent />
-      </RouterTestWrapper>
+        <MainContent homePage={StubHomePage} />
+      </RouterTestWrapper>,
     );
 
     // Check that HomePage is rendered
@@ -73,8 +72,8 @@ describe("Routes in MainContent", () => {
   it("renders empty main element for unknown routes", () => {
     render(
       <RouterTestWrapper initialEntries={["/nonexistent"]}>
-        <MainContent />
-      </RouterTestWrapper>
+        <MainContent homePage={StubHomePage} />
+      </RouterTestWrapper>,
     );
 
     // Check that main element exists but is empty for unknown routes
@@ -90,8 +89,8 @@ describe("Routes in MainContent", () => {
     testRoutes.forEach((route) => {
       const { unmount } = render(
         <RouterTestWrapper initialEntries={[route]}>
-          <MainContent />
-        </RouterTestWrapper>
+          <MainContent homePage={StubHomePage} />
+        </RouterTestWrapper>,
       );
 
       // All routes should render HomePage due to catch-all route
@@ -107,8 +106,8 @@ describe("Routes in MainContent", () => {
 
     render(
       <TestWrapper>
-        <MainContent className={customClassName} />
-      </TestWrapper>
+        <MainContent className={customClassName} homePage={StubHomePage} />
+      </TestWrapper>,
     );
 
     const mainElement = screen.getByRole("main");
@@ -119,8 +118,8 @@ describe("Routes in MainContent", () => {
   it("renders without className prop", () => {
     render(
       <TestWrapper>
-        <MainContent />
-      </TestWrapper>
+        <MainContent homePage={StubHomePage} />
+      </TestWrapper>,
     );
 
     const mainElement = screen.getByRole("main");
@@ -130,8 +129,8 @@ describe("Routes in MainContent", () => {
   it("has correct accessibility attributes", () => {
     render(
       <TestWrapper>
-        <MainContent />
-      </TestWrapper>
+        <MainContent homePage={StubHomePage} />
+      </TestWrapper>,
     );
 
     const mainElement = screen.getByRole("main");
@@ -142,8 +141,8 @@ describe("Routes in MainContent", () => {
   it("renders all 100 cards in HomePage", () => {
     render(
       <TestWrapper>
-        <MainContent />
-      </TestWrapper>
+        <MainContent homePage={StubHomePage} />
+      </TestWrapper>,
     );
 
     // Check that all cards are rendered
@@ -156,8 +155,8 @@ describe("Routes in MainContent", () => {
   it("maintains proper DOM structure", () => {
     render(
       <TestWrapper>
-        <MainContent />
-      </TestWrapper>
+        <MainContent homePage={StubHomePage} />
+      </TestWrapper>,
     );
 
     // Check DOM hierarchy

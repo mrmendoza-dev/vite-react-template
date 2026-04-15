@@ -1,5 +1,9 @@
 // tests/components/ShadcnComponents.test.jsx
-import { Button } from "@/components/ui/button";
+
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -15,9 +19,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
 
 describe("ShadCN Components", () => {
   describe("Button Component", () => {
@@ -35,12 +36,12 @@ describe("ShadCN Components", () => {
 
     it("renders with different variants", () => {
       const { rerender } = render(
-        <Button variant="secondary">Secondary</Button>
+        <Button variant="secondary">Secondary</Button>,
       );
       expect(screen.getByText("Secondary")).toHaveClass("bg-secondary");
 
       rerender(<Button variant="destructive">Destructive</Button>);
-      expect(screen.getByText("Destructive")).toHaveClass("bg-destructive");
+      expect(screen.getByText("Destructive")).toHaveClass("bg-destructive/10");
 
       rerender(<Button variant="outline">Outline</Button>);
       expect(screen.getByText("Outline")).toHaveClass("border");
@@ -60,7 +61,7 @@ describe("ShadCN Components", () => {
 
       const input = screen.getByPlaceholderText(/type here/i);
       expect(input).toBeInTheDocument();
-      expect(input).toHaveClass("flex", "h-9", "w-full");
+      expect(input).toHaveClass("h-8", "w-full");
 
       await userEvent.type(input, "Hello ShadCN");
       expect(input).toHaveValue("Hello ShadCN");
@@ -83,8 +84,8 @@ describe("ShadCN Components", () => {
     it("opens when triggered", async () => {
       render(
         <Dialog>
-          <DialogTrigger asChild>
-            <Button>Open Dialog</Button>
+          <DialogTrigger className={buttonVariants()}>
+            Open Dialog
           </DialogTrigger>
           <DialogContent>
             <DialogTitle>Test Dialog</DialogTitle>
@@ -93,7 +94,7 @@ describe("ShadCN Components", () => {
             </DialogDescription>
             <p>Dialog Content</p>
           </DialogContent>
-        </Dialog>
+        </Dialog>,
       );
 
       const triggerBtn = screen.getByText(/open dialog/i);
@@ -107,8 +108,8 @@ describe("ShadCN Components", () => {
     it("renders dialog with proper accessibility attributes", async () => {
       render(
         <Dialog>
-          <DialogTrigger asChild>
-            <Button>Open Dialog</Button>
+          <DialogTrigger className={buttonVariants()}>
+            Open Dialog
           </DialogTrigger>
           <DialogContent>
             <DialogTitle>Accessible Dialog</DialogTitle>
@@ -116,7 +117,7 @@ describe("ShadCN Components", () => {
               This dialog should have proper accessibility
             </DialogDescription>
           </DialogContent>
-        </Dialog>
+        </Dialog>,
       );
 
       const triggerBtn = screen.getByText(/open dialog/i);
@@ -138,7 +139,7 @@ describe("ShadCN Components", () => {
           <CardContent>
             <p>Card content goes here</p>
           </CardContent>
-        </Card>
+        </Card>,
       );
 
       expect(screen.getByText("Card Title")).toBeInTheDocument();
@@ -155,12 +156,12 @@ describe("ShadCN Components", () => {
           <CardContent>
             <p>Content</p>
           </CardContent>
-        </Card>
+        </Card>,
       );
 
       const cardTitle = screen.getByText("Styled Card");
       expect(cardTitle).toBeInTheDocument();
-      expect(cardTitle).toHaveClass("leading-none", "font-semibold");
+      expect(cardTitle).toHaveClass("leading-snug", "font-medium");
     });
   });
 
@@ -178,12 +179,12 @@ describe("ShadCN Components", () => {
               <Button variant="outline">Cancel</Button>
             </div>
           </CardContent>
-        </Card>
+        </Card>,
       );
 
       expect(screen.getByText("Form Example")).toBeInTheDocument();
       expect(
-        screen.getByPlaceholderText("Enter your name")
+        screen.getByPlaceholderText("Enter your name"),
       ).toBeInTheDocument();
       expect(screen.getByText("Submit")).toBeInTheDocument();
       expect(screen.getByText("Cancel")).toBeInTheDocument();

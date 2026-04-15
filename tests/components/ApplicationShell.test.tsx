@@ -1,9 +1,10 @@
 // tests/components/ApplicationShell.test.tsx
-import { ApplicationShell } from "@/components/layout/ApplicationShell";
-import { ApplicationProvider } from "@/contexts/ApplicationContext";
-import { render, screen } from "@testing-library/react";
+
+import { act, render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
+import { ApplicationShell } from "@/components/layout/ApplicationShell";
+import { ApplicationProvider } from "@/contexts/ApplicationContext";
 
 // Mock the HomePage component
 vi.mock("@/pages/HomePage", () => ({
@@ -47,15 +48,6 @@ vi.mock("@/components/layout/AppSidebar", () => ({
   ),
 }));
 
-// Mock the MainContent component
-vi.mock("@/components/layout/MainContent", () => ({
-  MainContent: ({ className }: { className?: string }) => (
-    <main data-testid="main-content" className={className}>
-      <div>Main Content</div>
-    </main>
-  ),
-}));
-
 // Mock the SidebarProvider
 vi.mock("@/components/ui/sidebar", () => ({
   SidebarProvider: ({ children, className, open, onOpenChange }: any) => (
@@ -95,14 +87,14 @@ describe("ApplicationShell", () => {
     render(
       <TestWrapper>
         <ApplicationShell />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     // Check that all main components are rendered
     expect(screen.getByTestId("error-boundary")).toBeInTheDocument();
     expect(screen.getByTestId("navbar")).toBeInTheDocument();
     expect(screen.getByTestId("app-sidebar")).toBeInTheDocument();
-    expect(screen.getByTestId("main-content")).toBeInTheDocument();
+    expect(screen.getByRole("main")).toBeInTheDocument();
     expect(screen.getByTestId("sidebar-provider")).toBeInTheDocument();
     expect(screen.getByTestId("toaster")).toBeInTheDocument();
   });
@@ -111,13 +103,13 @@ describe("ApplicationShell", () => {
     render(
       <TestWrapper>
         <ApplicationShell />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const errorBoundary = screen.getByTestId("error-boundary");
     expect(errorBoundary).toHaveAttribute(
       "data-label",
-      "ApplicationShell ErrorBoundary"
+      "ApplicationShell ErrorBoundary",
     );
   });
 
@@ -125,7 +117,7 @@ describe("ApplicationShell", () => {
     render(
       <TestWrapper>
         <ApplicationShell />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const sidebarProvider = screen.getByTestId("sidebar-provider");
@@ -137,7 +129,7 @@ describe("ApplicationShell", () => {
     render(
       <TestWrapper>
         <ApplicationShell />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const toaster = screen.getByTestId("toaster");
@@ -145,7 +137,7 @@ describe("ApplicationShell", () => {
     expect(toaster).toHaveAttribute("data-position", "top-right");
     expect(toaster).toHaveAttribute(
       "data-offset",
-      JSON.stringify({ top: 120, right: 20 })
+      JSON.stringify({ top: 120, right: 20 }),
     );
   });
 
@@ -153,7 +145,7 @@ describe("ApplicationShell", () => {
     render(
       <TestWrapper>
         <ApplicationShell />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const navbar = screen.getByTestId("navbar");
@@ -164,7 +156,7 @@ describe("ApplicationShell", () => {
       "backdrop-blur-sm",
       "z-50",
       "px-4",
-      "py-2"
+      "py-2",
     );
   });
 
@@ -172,7 +164,7 @@ describe("ApplicationShell", () => {
     render(
       <TestWrapper>
         <ApplicationShell />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const sidebar = screen.getByTestId("app-sidebar");
@@ -183,15 +175,15 @@ describe("ApplicationShell", () => {
     render(
       <TestWrapper>
         <ApplicationShell />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
-    const mainContent = screen.getByTestId("main-content");
+    const mainContent = screen.getByRole("main");
     expect(mainContent).toHaveClass(
       "flex-1",
       "overflow-auto",
       "bg-background",
-      "p-4"
+      "p-4",
     );
   });
 
@@ -199,7 +191,7 @@ describe("ApplicationShell", () => {
     render(
       <TestWrapper>
         <ApplicationShell />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     // Check that the layout structure is correct
@@ -213,7 +205,7 @@ describe("ApplicationShell", () => {
     render(
       <TestWrapper>
         <ApplicationShell />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const sidebarProvider = screen.getByTestId("sidebar-provider");
@@ -222,9 +214,10 @@ describe("ApplicationShell", () => {
     expect(sidebarProvider).toHaveAttribute("data-open", "false");
 
     // Click to toggle (this would normally be handled by the SidebarTrigger)
-    sidebarProvider.click();
+    act(() => {
+      sidebarProvider.click();
+    });
 
-    // The mock doesn't actually change state, but we can verify the click handler exists
     expect(sidebarProvider).toBeInTheDocument();
   });
 });

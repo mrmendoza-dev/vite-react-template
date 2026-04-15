@@ -1,13 +1,19 @@
+import type { ComponentType } from "react";
+import { Route, Routes } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { HomePage } from "@/pages/HomePage";
-import { Route, Routes } from "react-router-dom";
+
+export type MainContentProps = {
+  className?: string;
+  contentClassName?: string;
+  /** Swap the routed home view (e.g. lightweight stub in tests). */
+  homePage?: ComponentType;
+};
 
 export const MainContent = ({
   className,
-}: {
-  className?: string;
-  contentClassName?: string;
-}) => {
+  homePage: HomePageSlot = HomePage,
+}: MainContentProps) => {
   return (
     <main
       id="main-content"
@@ -16,8 +22,8 @@ export const MainContent = ({
     >
       <div className="min-h-full">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="*" element={<HomePage />} />
+          <Route path="/" element={<HomePageSlot />} />
+          <Route path="*" element={<HomePageSlot />} />
         </Routes>
       </div>
     </main>

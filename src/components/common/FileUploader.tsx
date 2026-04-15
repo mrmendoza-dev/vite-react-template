@@ -1,9 +1,9 @@
+import { AlertCircle, FileText, Upload, X } from "lucide-react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { AlertCircle, FileText, Upload, X } from "lucide-react";
-import { useRef, useState } from "react";
 
 interface FileUploaderProps {
   label?: string;
@@ -25,7 +25,7 @@ export const FileUploader = ({
   className,
 }: FileUploaderProps) => {
   const [error, setError] = useState<string>("");
-  const fileInputRef: any = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -57,9 +57,9 @@ export const FileUploader = ({
   };
 
   const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024) return bytes + " bytes";
-    else if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
-    else return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+    if (bytes < 1024) return `${bytes} bytes`;
+    else if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    else return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
   // Format accept string into readable format
@@ -101,7 +101,7 @@ export const FileUploader = ({
               "flex items-center justify-center border rounded-md px-3 py-2 min-h-10 transition-colors",
               "peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2",
               "peer-hover:bg-muted/50",
-              error ? "border-destructive" : "border-input"
+              error ? "border-destructive" : "border-input",
             )}
           >
             {value ? (

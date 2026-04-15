@@ -1,6 +1,6 @@
+import { ErrorBoundary } from "@/components/feedback/ErrorBoundary";
 import { ApplicationShell } from "@/components/layout/ApplicationShell";
 import { Providers } from "@/contexts/Providers";
-import { ErrorBoundary } from "@/components/feedback/ErrorBoundary";
 
 function App() {
   return (

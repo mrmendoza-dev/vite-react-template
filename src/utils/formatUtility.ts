@@ -22,7 +22,7 @@ export interface AbbreviationOptions {
  */
 export const formatCurrency = (
   value: number | string | null | undefined,
-  options: CurrencyFormatOptions = {}
+  options: CurrencyFormatOptions = {},
 ): string => {
   const {
     currency = "USD",
@@ -34,14 +34,14 @@ export const formatCurrency = (
   if (
     value === null ||
     value === undefined ||
-    (typeof value === "string" && isNaN(Number(value)))
+    (typeof value === "string" && Number.isNaN(Number(value)))
   ) {
     return "--";
   }
 
   const numValue = typeof value === "string" ? Number(value) : value;
 
-  if (isNaN(numValue)) {
+  if (Number.isNaN(numValue)) {
     return "--";
   }
 
@@ -95,7 +95,7 @@ export const formatCurrency = (
  */
 export const formatNumber = (
   value: number | string | null | undefined,
-  options: NumberFormatOptions = {}
+  options: NumberFormatOptions = {},
 ): string => {
   const {
     minimumFractionDigits = 0,
@@ -106,14 +106,14 @@ export const formatNumber = (
   if (
     value === null ||
     value === undefined ||
-    (typeof value === "string" && isNaN(Number(value)))
+    (typeof value === "string" && Number.isNaN(Number(value)))
   ) {
     return "--";
   }
 
   const numValue = typeof value === "string" ? Number(value) : value;
 
-  if (isNaN(numValue)) {
+  if (Number.isNaN(numValue)) {
     return "--";
   }
 
@@ -141,11 +141,11 @@ export const formatNumber = (
  */
 export const abbreviateNumber = (
   number: number | null | undefined,
-  options: AbbreviationOptions = {}
+  options: AbbreviationOptions = {},
 ): string => {
   const { minimumFractionDigits = 0, maximumFractionDigits = 0 } = options;
 
-  if (number === null || number === undefined || isNaN(number)) {
+  if (number === null || number === undefined || Number.isNaN(number)) {
     return "--";
   }
 
@@ -178,7 +178,7 @@ export const abbreviateNumber = (
 export const formatAddress = (
   address: string | null | undefined,
   prefixLength: number = 6,
-  suffixLength: number = 4
+  suffixLength: number = 4,
 ): string => {
   if (!address) {
     return "No address found";
@@ -197,7 +197,7 @@ export const formatAddress = (
  * Split address into prefix, middle, and suffix parts
  */
 export const splitAddress = (
-  address: string
+  address: string,
 ): {
   prefix: string;
   middle: string;

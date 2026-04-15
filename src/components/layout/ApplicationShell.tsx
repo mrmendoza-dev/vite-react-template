@@ -1,10 +1,10 @@
+import { Toaster } from "sonner";
 import { ErrorBoundary } from "@/components/feedback/ErrorBoundary";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { MainContent } from "@/components/layout/MainContent";
 import { Navbar } from "@/components/layout/Navbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { useApplicationContext } from "@/contexts/ApplicationContext";
-import { Toaster } from "sonner";
 
 const ApplicationLayout = () => {
   return (
