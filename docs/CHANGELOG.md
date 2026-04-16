@@ -18,6 +18,14 @@ Stack alignment with [REPO-MODERNIZATION.md](./REPO-MODERNIZATION.md) (April 202
 - **Drizzle ORM** — SQL schema and migrations (`server/db/`, `drizzle.config.ts`); default SQLite via `bun:sqlite`, `DATABASE_PATH` for location; scripts `db:generate`, `db:push`, `db:studio`.
 - **TanStack Query** — `@tanstack/react-query` with a shared client (`src/lib/query-client.ts`) and provider in `src/contexts/Providers.tsx` for server state and Eden-backed `queryFn`s.
 
+## v2.1.0
+
+Incremental polish on the v2 stack: data layer and client state are exercised end-to-end, and routing follows the React Router data-router layout pattern.
+
+- **Drizzle** — Example `examples` SQLite schema and `/api/examples` wired from `server/`; dev DB path via `DATABASE_PATH` / `data/dev.db` with parent dir creation on first run; migrations run at server start.
+- **TanStack Query** — Home (and future pages) use shared `QueryClient` + `useQuery` against Eden (`api.api.health`, `api.api.examples`) for live server-backed UI.
+- **Routing** — `createBrowserRouter` / `RouterProvider` with `src/router.tsx`, `export const appRoutes` for tests, `src/layouts/AppShell.tsx` + `<Outlet />`, route-level `lazy` for secondary pages, and `errorElement` for branch errors; Vite dev proxy for `/api` with `SERVER_PORT` / optional `VITE_API_URL` (no hardcoded API port in the client).
+
 ## v1.0.0
 
 - Initial release

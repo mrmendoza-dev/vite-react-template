@@ -1,37 +1,26 @@
 # Vite React Template
 
-A modern, feature-rich starter template for React applications built with Vite, TypeScript, and TailwindCSS. This template provides a solid foundation for building scalable web applications with best practices and a well-organized project structure.
+A **Bun-first** starter for React apps: **React 19**, **Vite 8**, **Tailwind CSS v4**, **shadcn-style UI** (Base UI primitives), an **Elysia** API on Bun, **Drizzle ORM** with **SQLite** (`bun:sqlite`), and **TanStack Query** for server state. Linting and formatting are unified with **Biome**; **Turborepo** runs the dev graph (`vite` + API) and CI tasks.
+
+For the full “why and what changed” story, see [docs/REPO-MODERNIZATION.md](docs/REPO-MODERNIZATION.md). Release notes live in [docs/CHANGELOG.md](docs/CHANGELOG.md).
 
 ## Features
 
-- React 19 with TypeScript support
-- Vite for lightning-fast builds and development
-- TailwindCSS for utility-first styling
-- Shadcn UI components with customizable themes
-- Dark/Light mode support out of the box
-- Application shell with responsive layout
-- Font Awesome icons integration
-- PWA ready with offline capabilities
-- Elysia (Bun) backend with basic routing
-- File structure optimized for scalability
-- Context API setup for state management
-- Custom hooks for common functionality
-- Responsive design with mobile breakpoint detection
-- SEO-friendly setup with meta tags
+- **Runtime & tooling:** Bun 1.3+ (`packageManager` pinned in `package.json`), Turborepo task graph, Vitest + Testing Library
+- **Frontend:** React 19, Vite 8 (Rolldown-era build), React Router 7, PWA via `vite-plugin-pwa`
+- **Styling:** Tailwind v4 via `@tailwindcss/vite`, theme tokens in CSS (`src/styles/`)
+- **UI:** Broad shadcn/ui kit under `src/components/ui/` (`@base-ui/react`, `components.json` for the CLI)
+- **Data:** TanStack Query (`src/lib/query-client.ts`, `src/contexts/Providers.tsx`); typed API client via Eden Treaty (`src/lib/api-client.ts`)
+- **Backend:** Elysia with modular routes, CORS, migrations on startup; optional direct API URL or same-origin `/api` + Vite proxy
+- **Database:** Drizzle + SQLite file DB (default `data/dev.db`), SQL migrations in `server/db/migrations/`
+- **Quality:** Biome (`lint`, `format`, `check` / `ci`)
 
 ## Prerequisites
 
-### Node.js (18.x or later recommended):
-
-[Download from nodejs.org](https://nodejs.org/)
-
-### npm or yarn:
+- **[Bun](https://bun.sh/)** 1.3+ (recommended; matches `package.json` `packageManager`)
 
 ```bash
-# Check if installed
-npm -v
-# or
-yarn -v
+bun --version
 ```
 
 ## Setup
@@ -46,240 +35,202 @@ cd vite-react-template
 ### Install dependencies
 
 ```bash
-npm install
-# or
-yarn
+bun install
 ```
 
-### Create a `.env` file in the root directory:
+### Environment
+
+Copy `.env.example` to `.env` and adjust if needed:
 
 ```env
 SERVER_PORT=3030
-VITE_API_URL=http://localhost:3030
+# Optional: bypass Vite proxy and call the API directly from the browser
+# VITE_API_URL=http://127.0.0.1:3030
 ```
 
-## Running the Application
+Optional:
 
-### Start both frontend and backend servers:
+- **`DATABASE_PATH`** — SQLite file path (default `data/dev.db`; see `server/db/index.ts`)
+
+## Running the application
+
+### Frontend + API together
 
 ```bash
-npm start
-# or
-yarn start
+bun start
 ```
 
-This will run:
+Runs Turborepo **`dev`** (Vite) and **`server`** (Bun watching `server/index.ts`) in parallel.
 
-- **Frontend:** Vite dev server (see `vite.config.ts` `server.port`, often `3000` or `5173`)
-- **Backend API:** [http://localhost:3030/api](http://localhost:3030/api) (override with `SERVER_PORT`)
+- **Frontend:** Vite dev server — host `0.0.0.0`, **port `3000`** (see `vite.config.ts`)
+- **API:** default **port `3030`** (`SERVER_PORT` / `PORT` in `server/env.ts`)
+- **Dev proxy:** requests to **`/api`** are proxied to the Bun server unless `VITE_API_URL` is set
 
-## Development
-
-### Run frontend only:
+### Frontend only
 
 ```bash
-npm run dev
-# or
-yarn dev
+bun run dev
 ```
 
-### Run backend only:
+### API only
 
 ```bash
-npm run server
-# or
-yarn server
+bun run server
 ```
 
-### Build for production:
+### Production build & preview
 
 ```bash
-npm run build
-# or
-yarn build
+bun run build
+bun run preview
 ```
 
-### Preview production build:
+## Scripts
 
-```bash
-npm run preview
-# or
-yarn preview
+| Script | Description |
+| ------ | ----------- |
+| `bun start` | Turbo: `dev` + `server` |
+| `bun run dev` | Vite dev server |
+| `bun run server` | Bun API with watch |
+| `bun run build` | `tsc` + `vite build` |
+| `bun run preview` | Preview production build |
+| `bun run test` | Vitest (excluding `*.bun.test.ts`) + Bun tests for SQLite / server |
+| `bun run lint` / `lint:fix` | Biome check / write |
+| `bun run format` | Biome format |
+| `bun run check` | `biome ci` |
+| `bun run ci` | Turbo: `lint`, `test`, `build` |
+| `bun run db:generate` / `db:push` / `db:studio` | Drizzle Kit |
+
+## Project structure
+
 ```
-
-## Project Structure
-
-```
-react-vite-template/
-├── public/                # Static assets and PWA files
-│   ├── favicon/           # Favicon files
-│   ├── images/            # Public images
-│   ├── _redirects         # Netlify redirects
-│   └── robots.txt         # SEO robots file
+vite-react-template/
+├── boilerplate/           # Optional rename / setup helper (see boilerplate/BOILERPLATE_SETUP.md)
+├── data/                  # Default SQLite file (e.g. dev.db); path overridable via DATABASE_PATH
+├── docs/                  # CHANGELOG, REPO-MODERNIZATION, etc.
+├── public/                # Static assets, PWA-related files, _redirects, robots.txt
 ├── server/                # Elysia (Bun) API
-│   ├── app.ts             # App factory (CORS, route plugins)
-│   ├── env.ts             # Port / env helpers
-│   ├── index.ts           # Entry (listen)
+│   ├── db/                # Drizzle schema, client, migrations
 │   ├── routes/            # Route modules
-│   └── utils/             # Server utilities
-├── src/                   # Frontend source code
-│   ├── assets/            # Frontend assets
-│   ├── components/        # React components
-│   │   ├── common/        # Shared components
-│   │   ├── layout/        # Layout components
-│   │   └── ui/            # UI components (Shadcn)
-│   ├── contexts/          # React contexts
-│   ├── data/              # Static data
-│   ├── hooks/             # Custom hooks
-│   ├── lib/               # Utility libraries
-│   ├── pages/             # Page components
-│   ├── services/          # API services
-│   ├── styles/            # CSS/SCSS files
-│   ├── types/             # TypeScript type declarations
-│   └── utils/             # Helper functions
-└── docs/                  # Documentation
+│   ├── utils/             # Server helpers
+│   ├── app.ts             # App factory (plugins, routes)
+│   ├── env.ts             # Port resolution
+│   └── index.ts           # Listen + migrations
+├── src/
+│   ├── assets/            # Frontend assets (optional)
+│   ├── components/
+│   │   ├── common/        # Shared pieces (e.g. theme toggle, file uploader)
+│   │   ├── feedback/      # Errors, boundary
+│   │   ├── layout/        # Navbar, sidebar, page transition
+│   │   └── ui/            # shadcn/ui components
+│   ├── contexts/          # Theme, app, providers (incl. QueryClient)
+│   ├── data/              # Placeholder for app data modules
+│   ├── hooks/
+│   ├── layouts/           # App shell / route layout
+│   ├── lib/               # api-client (Eden), query-client, cn/utils
+│   ├── pages/             # Home, Chat, Crypto detail, Profile, Error
+│   ├── styles/            # Tailwind v4 entry + themes
+│   ├── utils/
+│   ├── main.tsx
+│   ├── router.tsx         # createBrowserRouter + lazy routes
+│   └── registerSW.ts
+├── tests/
+│   ├── components/
+│   ├── server/            # Includes *.bun.test.ts (Bun runner + bun:sqlite)
+│   ├── utils/
+│   └── setupTests.ts      # Vitest setup
+├── biome.json
+├── components.json
+├── drizzle.config.ts
+├── index.html
+├── package.json
+├── turbo.json
+└── vite.config.ts
 ```
 
-## Environment Variables
+## Environment variables
 
-| Variable      | Description                          | Required |
-| ------------- | ------------------------------------ | -------- |
-| SERVER_PORT   | Elysia (Bun) API port                | No       |
-| PORT          | Fallback for API port (e.g. hosting) | No       |
-| VITE_API_URL  | API base URL for the frontend        | No       |
+| Variable | Description | Required |
+| -------- | ----------- | -------- |
+| `SERVER_PORT` | API listen port | No (default `3030`) |
+| `PORT` | Fallback for API port (e.g. hosting) | No |
+| `VITE_API_URL` | API origin for the browser; if unset, use same-origin `/api` + Vite proxy | No |
+| `DATABASE_PATH` | SQLite file path | No (default `data/dev.db`) |
 
-## Tech Stack
+## Tech stack
 
-### Frontend:
+### Frontend
 
-- React 19
-- TypeScript
-- Vite (build tool)
-- TailwindCSS
-- Shadcn UI
-- React Router DOM
-- Font Awesome icons
-- Lucide React icons (optional)
+- React 19, TypeScript, Vite 8, `@vitejs/plugin-react-swc`
+- Tailwind CSS v4, `tailwind-merge`, `class-variance-authority`
+- shadcn/ui-style components (`@base-ui/react`, `shadcn` CLI)
+- React Router DOM 7, TanStack Query, Lucide icons, `@fontsource-variable/inter`
 
-### Backend:
+### Backend
 
-- Elysia
-- Bun
-- [@elysiajs/eden](https://elysiajs.com/eden/overview.html) Treaty client (`src/lib/api-client.ts`, `import type` from `server/app`)
+- Elysia, Bun, `@elysiajs/cors`, `@elysiajs/eden` (Treaty types shared with `src/lib/api-client.ts`)
+- Drizzle ORM, `bun:sqlite`, Drizzle Kit migrations
 
-### Development Tools:
+### Tooling
 
-- Biome (lint + format)
-- TypeScript
-- PWA plugin for Vite
-- Turbo (build tool)
-- Vitest (testing framework)
-- React Testing Library
-- jsdom (test environment)
+- Biome (lint + format), Turborepo, Vitest + jsdom + Testing Library, `vite-plugin-pwa`
 
-## Included Components & Features
+## Included UI & behavior
 
-### Layout:
-
-- Responsive Navbar
-- Sidebar with collapsible groups
-- Main content area
-- Theme toggle
-
-### UI Components (Shadcn):
-
-- Buttons, Inputs, Labels
-- Collapsible panels
-- Tooltips, Toasts
-- Separation components
-- Sheets (dialogs)
-
-### Hooks:
-
-- `useIsMobile` - Detect mobile screen size
-- `useLocalStorage` - Persist data in localStorage
-- `useModal` - Simple modal state management
-- `useFocus` - Auto-focus elements
-- `useInterval` - Safe interval hook
+- **Layout:** `AppShell` with sidebar groups, navbar, theme toggle, page transitions
+- **Routes:** Home, Chat, crypto detail (`/crypto/:id`), Profile (see `src/router.tsx`)
+- **Hooks:** e.g. `useIsMobile` (`use-mobile.ts`), `useLocalStorage`, `useModal`, `useFocus`, `useInterval`, `useEyeDropper` (where supported in the browser)
 
 ## Testing
 
-This template includes a comprehensive testing setup with **Vitest** and **React Testing Library**.
-
-### Running Tests
+- **Vitest** (`tests/**/*.test.{ts,tsx}`) with `tests/setupTests.ts`; `**/*.bun.test.ts` excluded from Vitest
+- **Bun’s test runner** for files that need `bun:sqlite` (e.g. `tests/server/db.bun.test.ts`)
 
 ```bash
-npm test              # Run all tests
-npm run test:watch    # Watch mode
-npm run test:coverage # With coverage
+bun run test
+# Vitest watch only (Bun `*.bun.test.ts` are not in watch mode here):
+bun run --bun vitest --watch
 ```
 
-### Test Coverage
-
-- ✅ Component rendering and structure
-- ✅ User interactions and routing
-- ✅ Context and state management
-- ✅ Accessibility attributes
-- ✅ Dialog and modal interactions
-
-### Test Structure
+Layout of tests:
 
 ```
 tests/
-├── components/    # Component tests
-├── utils/        # Utility tests
-└── setupTests.js # Configuration
+├── components/
+├── server/
+├── utils/
+└── setupTests.ts
 ```
 
 ## Deployment
 
-The application can be deployed using:
+Static frontend output is **`dist`** (`vite build`). The API is a separate Bun process; host it accordingly (or replace with your own backend).
 
-### Netlify
+**Netlify (SPA):**
 
-1. Connect your GitHub repository
-2. Set build command to `npm run build`
-3. Set publish directory to `dist`
-4. Add environment variables in Netlify dashboard
+1. Connect the repo
+2. Build: `bun run build`
+3. Publish: `dist`
+4. Set env vars in the dashboard; add redirects if needed (`public/_redirects` is a starting point)
 
-### Vercel
+**Vercel:** Same idea — output directory `dist`; configure API separately unless you use serverless elsewhere.
 
-1. Similar process to Netlify
-2. Set the output directory to `dist`
+## PWA
 
-## PWA Support
+`vite-plugin-pwa` provides manifest, icons, and service worker registration (`src/registerSW.ts`). Use HTTPS in production for full PWA behavior.
 
-This template includes PWA capabilities through Vite PWA plugin:
+## Customizing theme & components
 
-- Offline support
-- App manifest for installation
-- Service worker auto-updates
-- Icons for various devices
-
-## Customizing Shadcn UI Components
-
-The template uses Shadcn UI for component styling. To customize:
-
-- Modify the theme variables in `src/styles/index.css`
-- Use the `cn()` utility function to compose classes
-- Override individual component styles
+- Global tokens and Tailwind layers: `src/styles/index.css` and related files under `src/styles/`
+- Use the `cn()` helper from `src/lib/utils.ts` for class composition
+- Regenerate or add shadcn components with the `shadcn` CLI and `components.json`
 
 ## Troubleshooting
 
-### Module not found error
-
-- Check if all dependencies are installed
-- Verify import paths are correct (case-sensitive)
-
-### Styles not applying correctly
-
-- Make sure TailwindCSS is properly configured
-- Check for CSS specificity issues
-
-### PWA not working
-
-- Ensure the site is served over HTTPS
-- Verify service worker registration
+- **Module not found:** Run `bun install`; check path aliases and case-sensitive imports
+- **Styles look wrong:** Confirm `@import "tailwindcss"` chain and v4 theme variables in CSS
+- **API 404 in dev:** Ensure the Bun server is running and `/api` proxy target matches `SERVER_PORT` (or set `VITE_API_URL`)
+- **PWA:** Serve over HTTPS; verify service worker registration in devtools
 
 ## License
 
@@ -287,10 +238,4 @@ MIT
 
 ## Acknowledgements
 
-- Vite
-- React
-- TailwindCSS
-- Shadcn UI
-- Elysia
-- Vitest
-- React Testing Library
+- [Vite](https://vitejs.dev/), [React](https://react.dev/), [Tailwind CSS](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/), [Elysia](https://elysiajs.com/), [Drizzle](https://orm.drizzle.team/), [TanStack Query](https://tanstack.com/query), [Vitest](https://vitest.dev/), [Testing Library](https://testing-library.com/), [Bun](https://bun.sh/), [Turborepo](https://turbo.build/)

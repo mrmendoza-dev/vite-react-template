@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
-import { ApplicationShell } from "@/components/layout/ApplicationShell";
 import { Providers } from "@/contexts/Providers";
+import { appRoutes } from "@/router";
 
 vi.mock("@/lib/api-client", () => ({
   api: {
@@ -10,18 +10,23 @@ vi.mock("@/lib/api-client", () => ({
       health: {
         get: async () => ({ data: { status: "ok" as const }, error: null }),
       },
+      examples: {
+        get: async () => ({
+          data: [{ id: 1, label: "demo" }],
+          error: null,
+        }),
+      },
     },
   },
 }));
 
-describe("ApplicationShell", () => {
+describe("AppShell", () => {
   it("renders navigation, main, and sidebar toggle", () => {
+    const router = createMemoryRouter(appRoutes, { initialEntries: ["/"] });
     render(
-      <BrowserRouter>
-        <Providers>
-          <ApplicationShell />
-        </Providers>
-      </BrowserRouter>,
+      <Providers>
+        <RouterProvider router={router} />
+      </Providers>,
     );
 
     expect(screen.getByRole("navigation")).toBeInTheDocument();

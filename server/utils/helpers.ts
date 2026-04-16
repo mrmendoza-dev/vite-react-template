@@ -1,12 +1,9 @@
-import fs from "node:fs/promises";
+import { mkdir } from "fs/promises";
 
 export const generateUnixTimestamp = (): number =>
   Math.floor(Date.now() / 1000);
 
+/** Ensures `dirPath` exists (including parents). Safe to call if it already exists. */
 export const ensureDirectoryExists = async (dirPath: string): Promise<void> => {
-  try {
-    await fs.access(dirPath);
-  } catch {
-    await fs.mkdir(dirPath, { recursive: true });
-  }
+  await mkdir(dirPath, { recursive: true });
 };

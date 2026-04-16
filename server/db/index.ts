@@ -1,5 +1,6 @@
 import { Database } from "bun:sqlite";
-import { fileURLToPath } from "node:url";
+import { mkdirSync } from "fs";
+import { dirname, join, resolve } from "path";
 import { type BunSQLiteDatabase, drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import * as schema from "./schema";
@@ -17,7 +18,11 @@ export const initDb = (path = getDatabasePath()): Db => {
   if (db) {
     return db;
   }
-  sqlite = new Database(path);
+  const openPath = path === ":memory:" ? path : resolve(path);
+  if (path !== ":memory:") {
+    mkdirSync(dirname(openPath), { recursive: true });
+  }
+  sqlite = new Database(openPath);
   sqlite.run("PRAGMA foreign_keys = ON;");
   db = drizzle(sqlite, { schema });
   return db;
@@ -33,7 +38,7 @@ export const getDb = (): Db => {
 /** Applies SQL migrations in `server/db/migrations` (safe to call on every server start). */
 export const runMigrations = (): void => {
   const database = getDb();
-  const folder = fileURLToPath(new URL("./migrations", import.meta.url));
+  const folder = join(import.meta.dir, "migrations");
   migrate(database, { migrationsFolder: folder });
 };
 

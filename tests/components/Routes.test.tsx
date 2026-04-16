@@ -1,59 +1,74 @@
-import { render, screen } from "@testing-library/react";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
-import { MainContent } from "@/components/layout/MainContent";
+import { render, screen, waitFor } from "@testing-library/react";
+import { createMemoryRouter, RouterProvider } from "react-router-dom";
+import { describe, expect, it, vi } from "vitest";
+import { Providers } from "@/contexts/Providers";
+import { appRoutes } from "@/router";
 
-const StubHomePage = () => (
-  <div data-testid="home-page">
-    <h1>Home Page</h1>
-    <p data-testid="home-stub-content">Stub</p>
-  </div>
-);
+vi.mock("@/lib/api-client", () => ({
+  api: {
+    api: {
+      health: {
+        get: async () => ({ data: { status: "ok" as const }, error: null }),
+      },
+      examples: {
+        get: async () => ({
+          data: [
+            { id: 1, label: "demo" },
+            { id: 2, label: "vitest" },
+          ],
+          error: null,
+        }),
+      },
+    },
+  },
+}));
 
-describe("MainContent routing", () => {
-  it("renders main landmark and home at /", () => {
-    render(
-      <MemoryRouter initialEntries={["/"]}>
-        <MainContent homePage={StubHomePage} />
-      </MemoryRouter>,
-    );
+const renderAt = (path: string) => {
+  const router = createMemoryRouter(appRoutes, { initialEntries: [path] });
+  return render(
+    <Providers>
+      <RouterProvider router={router} />
+    </Providers>,
+  );
+};
 
+describe("app routes", () => {
+  it("renders home at /", async () => {
+    renderAt("/");
+    await waitFor(() => {
+      expect(screen.getByTestId("api-health-status")).toBeInTheDocument();
+    });
+  });
+
+  it("renders main landmark with a11y attributes", async () => {
+    renderAt("/");
+    await waitFor(() => {
+      expect(screen.getByTestId("api-health-status")).toBeInTheDocument();
+    });
     const main = screen.getByRole("main");
-    expect(main).toBeInTheDocument();
     expect(main).toHaveAttribute("id", "main-content");
     expect(main).toHaveAttribute("tabIndex", "-1");
-    expect(screen.getByTestId("home-page")).toBeInTheDocument();
   });
 
-  it("renders home for unknown paths via catch-all", () => {
-    render(
-      <MemoryRouter initialEntries={["/unknown"]}>
-        <MainContent homePage={StubHomePage} />
-      </MemoryRouter>,
-    );
-
-    expect(screen.getByTestId("home-page")).toBeInTheDocument();
+  it("renders chat at /chat (lazy route)", async () => {
+    renderAt("/chat");
+    await waitFor(() => {
+      expect(screen.getByTestId("chat-page")).toBeInTheDocument();
+    });
   });
 
-  it("merges className on main", () => {
-    render(
-      <BrowserRouter>
-        <MainContent className="custom-shell" homePage={StubHomePage} />
-      </BrowserRouter>,
-    );
-
-    expect(screen.getByRole("main")).toHaveClass("custom-shell", "h-full");
+  it("renders crypto detail at /crypto/:id (lazy route)", async () => {
+    renderAt("/crypto/demo-id");
+    await waitFor(() => {
+      expect(screen.getByTestId("crypto-detail")).toBeInTheDocument();
+    });
+    expect(screen.getByText("demo-id")).toBeInTheDocument();
   });
 
-  it("applies contentClassName to inner wrapper", () => {
-    render(
-      <MemoryRouter initialEntries={["/"]}>
-        <MainContent contentClassName="inner-padding" homePage={StubHomePage} />
-      </MemoryRouter>,
-    );
-
-    const main = screen.getByRole("main");
-    const inner = main.firstChild as HTMLElement;
-    expect(inner).toHaveClass("inner-padding", "min-h-full");
+  it("renders profile at /profile (lazy route)", async () => {
+    renderAt("/profile");
+    await waitFor(() => {
+      expect(screen.getByTestId("profile-page")).toBeInTheDocument();
+    });
   });
 });

@@ -1,6 +1,6 @@
-import { mkdtemp, rm, stat } from "node:fs/promises";
-import { tmpdir } from "node:os";
-import path from "node:path";
+import { mkdtemp, rm, stat } from "fs/promises";
+import { tmpdir } from "os";
+import { join } from "path";
 import { describe, expect, it } from "vitest";
 import {
   ensureDirectoryExists,
@@ -19,8 +19,8 @@ describe("generateUnixTimestamp", () => {
 
 describe("ensureDirectoryExists", () => {
   it("creates a nested directory when missing", async () => {
-    const base = await mkdtemp(path.join(tmpdir(), "srv-test-"));
-    const nested = path.join(base, "a", "b");
+    const base = await mkdtemp(join(tmpdir(), "srv-test-"));
+    const nested = join(base, "a", "b");
     await ensureDirectoryExists(nested);
     const st = await stat(nested);
     expect(st.isDirectory()).toBe(true);

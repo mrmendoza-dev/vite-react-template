@@ -1,4 +1,4 @@
-import { Home, Settings, User } from "lucide-react";
+import { Home, MessageCircle, Settings, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   Dialog,
@@ -32,6 +32,11 @@ const menuGroups = [
         title: "Home",
         url: "/",
         icon: Home,
+      },
+      {
+        title: "Chat",
+        url: "/chat",
+        icon: MessageCircle,
       },
     ],
   },
