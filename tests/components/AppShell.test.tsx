@@ -5,6 +5,7 @@ import { Providers } from "@/contexts/Providers";
 import { appRoutes } from "@/router";
 
 vi.mock("@/lib/api-client", () => ({
+  hasExplicitApiOrigin: true,
   api: {
     api: {
       health: {

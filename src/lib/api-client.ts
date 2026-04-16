@@ -17,5 +17,13 @@ export const getApiOrigin = (): string => {
   return "";
 };
 
+/**
+ * Whether `VITE_API_URL` was set at build time. Used for UI hints only — same-origin
+ * `/api` behind a reverse proxy can still work in production without it.
+ */
+export const hasExplicitApiOrigin = Boolean(
+  import.meta.env.VITE_API_URL?.trim(),
+);
+
 /** Eden Treaty client — routes and response types come from `App` (use `api.api.…` for the `/api` group). */
 export const api = treaty<App>(getApiOrigin());

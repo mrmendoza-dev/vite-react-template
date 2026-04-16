@@ -5,10 +5,14 @@ import { Providers } from "@/contexts/Providers";
 import { HomePage } from "@/pages/HomePage";
 
 vi.mock("@/lib/api-client", () => ({
+  hasExplicitApiOrigin: true,
   api: {
     api: {
       health: {
         get: async () => ({ data: { status: "ok" as const }, error: null }),
+      },
+      examples: {
+        get: async () => ({ data: [], error: null }),
       },
     },
   },

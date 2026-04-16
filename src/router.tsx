@@ -1,14 +1,27 @@
 import { createBrowserRouter, type RouteObject } from "react-router-dom";
 import { AppShell } from "@/layouts/AppShell";
-import { ErrorPage } from "@/pages/ErrorPage";
 import { HomePage } from "@/pages/HomePage";
+import { RouteErrorPage } from "@/pages/RouteErrorPage";
+
+const devOnlyRoutes: RouteObject[] = import.meta.env.DEV
+  ? [
+      {
+        path: "dev/error-boom",
+        lazy: async () => {
+          const { DevErrorBoom } = await import("@/pages/DevErrorBoom");
+          return { Component: DevErrorBoom };
+        },
+      },
+    ]
+  : [];
 
 export const appRoutes: RouteObject[] = [
   {
     path: "/",
     element: <AppShell />,
-    errorElement: <ErrorPage />,
+    errorElement: <RouteErrorPage />,
     children: [
+      ...devOnlyRoutes,
       {
         index: true,
         element: <HomePage />,

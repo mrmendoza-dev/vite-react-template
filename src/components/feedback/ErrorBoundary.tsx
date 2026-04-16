@@ -42,7 +42,7 @@ export class ErrorBoundary extends React.Component<
   render() {
     const { hasError } = this.state;
     if (hasError) {
-      return <ErrorGeneric />;
+      return <ErrorGeneric onRetry={this.reset} />;
     }
 
     return this.props.children;

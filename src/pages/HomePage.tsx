@@ -1,7 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "@/lib/api-client";
+import { DevErrorTriggers } from "@/components/dev/DevErrorTriggers";
+import { api, hasExplicitApiOrigin } from "@/lib/api-client";
+
+const pollEvery5sUnlessError = (query: {
+  state: { status: string };
+}): number | false => (query.state.status === "error" ? false : 5_000);
 
 export const HomePage = () => {
+  const showStaticDeployHint =
+    import.meta.env.PROD && !hasExplicitApiOrigin;
+
   const health = useQuery({
     queryKey: ["api", "health"],
     queryFn: async () => {
@@ -11,7 +19,7 @@ export const HomePage = () => {
       }
       return data;
     },
-    refetchInterval: 5_000,
+    refetchInterval: pollEvery5sUnlessError,
   });
 
   const examples = useQuery({
@@ -21,10 +29,20 @@ export const HomePage = () => {
       if (error) {
         throw new Error("Failed to load examples");
       }
-      return data ?? [];
+      if (data == null) {
+        return [];
+      }
+      if (!Array.isArray(data)) {
+        throw new Error(
+          "Examples API returned a non-array response. For static hosting, set VITE_API_URL to your Bun API origin, or deploy the server so GET /api/examples returns a JSON array.",
+        );
+      }
+      return data;
     },
-    refetchInterval: 5_000,
+    refetchInterval: pollEvery5sUnlessError,
   });
+
+  const exampleRows = Array.isArray(examples.data) ? examples.data : [];
 
   return (
     <div className="space-y-8 p-4">
@@ -37,6 +55,8 @@ export const HomePage = () => {
         </p>
       </header>
 
+      {import.meta.env.DEV ? <DevErrorTriggers /> : null}
+
       <section
         className="rounded-xl border bg-card text-card-foreground shadow p-6 space-y-4"
         aria-labelledby="server-heading"
@@ -47,10 +67,24 @@ export const HomePage = () => {
         <p className="text-sm text-muted-foreground">
           Live data from <code className="text-foreground">GET /api/health</code>{" "}
           and <code className="text-foreground">GET /api/examples</code>. Refreshes
-          every 5s. Run the Bun server and ensure{" "}
+          every 5s while healthy. Run the Bun server and ensure{" "}
           <code className="text-foreground">SERVER_PORT</code> matches your env (or
           set <code className="text-foreground">VITE_API_URL</code>).
         </p>
+
+        {showStaticDeployHint ? (
+          <p
+            className="text-sm rounded-lg border border-dashed bg-muted/40 px-3 py-2 text-muted-foreground"
+            role="note"
+          >
+            This production build has no{" "}
+            <code className="text-foreground">VITE_API_URL</code>. The app calls
+            same-origin <code className="text-foreground">/api/*</code> (fine if your
+            host proxies to Bun). Pure static hosts usually need{" "}
+            <code className="text-foreground">VITE_API_URL</code> set at{" "}
+            <strong className="font-medium text-foreground">build</strong> time.
+          </p>
+        ) : null}
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="rounded-lg border bg-background p-4">
@@ -65,7 +99,9 @@ export const HomePage = () => {
               {health.isPending
                 ? "…"
                 : health.isError
-                  ? "unreachable"
+                  ? showStaticDeployHint
+                    ? "unreachable (check /api or VITE_API_URL)"
+                    : "unreachable"
                   : (health.data?.status ?? "—")}
             </p>
           </div>
@@ -77,10 +113,19 @@ export const HomePage = () => {
             {examples.isPending ? (
               <p className="text-sm text-muted-foreground">Loading rows…</p>
             ) : examples.isError ? (
-              <p className="text-sm text-destructive">
-                Could not load examples (is the API running?)
+              <p className="text-sm text-muted-foreground">
+                Could not load examples.{" "}
+                {showStaticDeployHint ? (
+                  <>
+                    On a static host, set{" "}
+                    <code className="text-foreground">VITE_API_URL</code> to your
+                    API origin and rebuild.
+                  </>
+                ) : (
+                  <>Is the Bun API running?</>
+                )}
               </p>
-            ) : examples.data.length === 0 ? (
+            ) : exampleRows.length === 0 ? (
               <p className="text-sm text-muted-foreground">
                 No rows yet. Seed{" "}
                 <code className="text-foreground">examples</code> in SQLite or
@@ -91,7 +136,7 @@ export const HomePage = () => {
                 className="text-sm space-y-1 font-mono"
                 data-testid="server-examples-list"
               >
-                {examples.data.map((row) => (
+                {exampleRows.map((row) => (
                   <li key={row.id}>
                     <span className="text-muted-foreground">#{row.id}</span>{" "}
                     {row.label}
