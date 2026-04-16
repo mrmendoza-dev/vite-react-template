@@ -58,10 +58,10 @@ describe("app routes", () => {
     });
   });
 
-  it("renders crypto detail at /crypto/:id (lazy route)", async () => {
-    renderAt("/crypto/demo-id");
+  it("renders detail at /detail/:id (lazy route)", async () => {
+    renderAt("/detail/demo-id");
     await waitFor(() => {
-      expect(screen.getByTestId("crypto-detail")).toBeInTheDocument();
+      expect(screen.getByTestId("detail-page")).toBeInTheDocument();
     });
     expect(screen.getByText("demo-id")).toBeInTheDocument();
   });

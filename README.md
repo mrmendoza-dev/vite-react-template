@@ -128,7 +128,7 @@ vite-react-template/
 │   ├── hooks/
 │   ├── layouts/           # App shell / route layout
 │   ├── lib/               # api-client (Eden), query-client, cn/utils
-│   ├── pages/             # Home, Chat, Crypto detail, Profile, Error
+│   ├── pages/             # Home, Chat, Detail, Profile, Error
 │   ├── styles/            # Tailwind v4 entry + themes
 │   ├── utils/
 │   ├── main.tsx
@@ -178,7 +178,7 @@ vite-react-template/
 ## Included UI & behavior
 
 - **Layout:** `AppShell` with sidebar groups, navbar, theme toggle, page transitions
-- **Routes:** Home, Chat, crypto detail (`/crypto/:id`), Profile (see `src/router.tsx`)
+- **Routes:** Home, Chat, generic detail (`/detail/:id`), Profile (see `src/router.tsx`)
 - **Hooks:** e.g. `useIsMobile` (`use-mobile.ts`), `useLocalStorage`, `useModal`, `useFocus`, `useInterval`, `useEyeDropper` (where supported in the browser)
 
 ## Testing

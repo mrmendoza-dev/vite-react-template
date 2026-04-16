@@ -34,10 +34,10 @@ export const appRoutes: RouteObject[] = [
         },
       },
       {
-        path: "crypto/:id",
+        path: "detail/:id",
         lazy: async () => {
-          const { CryptoDetail } = await import("@/pages/CryptoDetail");
-          return { Component: CryptoDetail };
+          const { DetailPage } = await import("@/pages/DetailPage");
+          return { Component: DetailPage };
         },
       },
       {

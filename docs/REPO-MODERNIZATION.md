@@ -47,6 +47,107 @@ Legacy editor-only or npm-only artifacts (old ESLint config, npmrc quirks, ad ho
 
 ---
 
+## Repository file trees
+
+**New (modernized) layout** — the structure this template standardizes on after migration: Bun + Elysia `server/`, Vite + React `src/`, Drizzle + SQLite, Turborepo, and Vitest/Bun tests.
+
+**Current layout** — as of April 15, 2026 the checkout matches that layout. The tree below lists **source and repo-tracked config** only. It omits install/build/cache dirs (`node_modules/`, `dist/`, `.turbo/`) and gitignored locals such as `data/*.db` (created when you run the API/migrations with the default `DATABASE_PATH`).
+
+```text
+.
+├── biome.json
+├── boilerplate/
+│   ├── BOILERPLATE_SETUP.md
+│   └── setupBoilerplate.js
+├── bun.lock
+├── bunfig.toml
+├── components.json
+├── docs/
+│   ├── CHANGELOG.md
+│   └── REPO-MODERNIZATION.md
+├── drizzle.config.ts
+├── index.html
+├── package.json
+├── public/
+│   ├── _redirects
+│   ├── favicon/                    # png, ico, etc.
+│   ├── images/
+│   └── robots.txt
+├── server/
+│   ├── app.ts
+│   ├── env.ts
+│   ├── index.ts
+│   ├── db/
+│   │   ├── index.ts
+│   │   ├── schema.ts
+│   │   └── migrations/
+│   │       ├── 0000_mature_roulette.sql
+│   │       └── meta/               # Drizzle journal + snapshots
+│   ├── routes/
+│   │   ├── examples.ts
+│   │   └── index.ts
+│   └── utils/
+│       ├── helpers.ts
+│       └── index.ts
+├── src/
+│   ├── App.tsx
+│   ├── main.tsx
+│   ├── registerSW.ts
+│   ├── router.tsx
+│   ├── vite-env.d.ts
+│   ├── assets/
+│   ├── components/
+│   │   ├── common/                 # e.g. file-uploader, theme-toggle, eye-dropper
+│   │   ├── dev/                    # DevErrorTriggers
+│   │   ├── feedback/               # ErrorBoundary, ErrorGeneric, …
+│   │   ├── layout/                 # AppSidebar, Navbar, PageTransition
+│   │   └── ui/                     # shadcn-style kit (many *.tsx; see repo)
+│   ├── constants/
+│   ├── contexts/                   # Providers, Theme, Application
+│   ├── hooks/
+│   ├── layouts/
+│   │   └── AppShell.tsx
+│   ├── lib/
+│   │   ├── api-client.ts           # Eden Treaty client
+│   │   ├── query-client.ts
+│   │   └── utils.ts
+│   ├── pages/
+│   │   ├── ChatPage.tsx
+│   │   ├── DetailPage.tsx
+│   │   ├── DevErrorBoom.tsx
+│   │   ├── HomePage.tsx
+│   │   ├── ProfilePage.tsx
+│   │   └── RouteErrorPage.tsx
+│   ├── styles/
+│   │   ├── index.css
+│   │   ├── base/
+│   │   ├── components/
+│   │   └── themes/
+│   └── utils/
+├── tests/
+│   ├── bun-test-preload-dom.ts
+│   ├── bun-test-preload-testing-library.ts
+│   ├── setupTests.ts
+│   ├── components/
+│   │   ├── AppShell.test.tsx
+│   │   ├── HomePage.test.tsx
+│   │   ├── Routes.test.tsx
+│   │   └── ui-smoke.test.tsx
+│   ├── server/
+│   │   ├── api.test.ts
+│   │   ├── db.bun.test.ts          # bun:test + bun:sqlite
+│   │   └── helpers.test.ts
+│   └── utils/
+│       └── format.test.ts
+├── tsconfig.json
+├── turbo.json
+└── vite.config.ts
+```
+
+Root files not shown above: `.env.example` (copy to `.env` locally).
+
+---
+
 ## Optional next steps (not required for “modern” baseline)
 
 - **React Compiler:** enable when you want less manual memoization; stack is already on React 19.
