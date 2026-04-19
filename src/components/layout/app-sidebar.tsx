@@ -20,7 +20,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useApplicationContext } from "@/contexts/ApplicationContext";
+import { useApplicationContext } from "@/contexts/application-context";
 import { cn } from "@/lib/utils";
 
 // Grouped menu items

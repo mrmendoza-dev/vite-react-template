@@ -26,9 +26,6 @@ Incremental polish on the v2 stack: data layer and client state are exercised en
 - **TanStack Query** — Home (and future pages) use shared `QueryClient` + `useQuery` against Eden (`api.api.health`, `api.api.examples`) for live server-backed UI.
 - **Routing** — `createBrowserRouter` / `RouterProvider` with `src/router.tsx`, `export const appRoutes` for tests, `src/layouts/AppShell.tsx` + `<Outlet />`, route-level `lazy` for secondary pages, and `errorElement` for branch errors; Vite dev proxy for `/api` with `SERVER_PORT` / optional `VITE_API_URL` (no hardcoded API port in the client).
 
-## v1.0.0
-
-- Initial release
 
 ## v1.1.0
 - Added README-Changelog.md
@@ -36,33 +33,6 @@ Incremental polish on the v2 stack: data layer and client state are exercised en
     - In Progress
 - Added tests/ for testing with Vitest
 
+## v1.0.0
 
-### Testing (Vitest)
-- /tests directory in root
-    - /tests/components/
-    - /tests/utils/
-    - /tests/setupTests.js
-        - Config file essentially
-    /src
-    /components
-        Button.jsx
-    /utils
-        math.js
-    /tests
-    /components
-        Button.test.jsx
-    /utils
-        math.test.js
-    setupTests.js
-
-- Install necessary dependencies
-    ```
-    npm install -D vitest @testing-library/react @testing-library/jest-dom @testing-library/user-event jsdom @testing-library/dom
-    ```
-- Add "test": "vitest" to package.json
-    "scripts": {
-        "test": "vitest"
-    }
-
-
-
+- Initial release

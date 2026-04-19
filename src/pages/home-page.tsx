@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { DevErrorTriggers } from "@/components/dev/DevErrorTriggers";
+import { DevErrorTriggers } from "@/components/dev/dev-error-triggers";
 import { api, hasExplicitApiOrigin } from "@/lib/api-client";
 
 const pollEvery5sUnlessError = (query: {

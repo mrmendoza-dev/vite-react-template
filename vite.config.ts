@@ -59,7 +59,7 @@ export default defineConfig(({ mode }) => {
     test: {
       globals: true,
       environment: "jsdom",
-      setupFiles: "./tests/setupTests.ts",
+      setupFiles: "./tests/setup-tests.ts",
       include: ["tests/**/*.test.{ts,tsx}"],
       // Optimized for Bun's native test runner if needed
       exclude: ["node_modules", "dist", "**/*.bun.test.ts"],

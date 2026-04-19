@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
-import { Providers } from "@/contexts/Providers";
-import { HomePage } from "@/pages/HomePage";
+import { Providers } from "@/contexts/providers";
+import { HomePage } from "@/pages/home-page";
 
 vi.mock("@/lib/api-client", () => ({
   hasExplicitApiOrigin: true,

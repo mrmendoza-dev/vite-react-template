@@ -76,7 +76,7 @@
       }
     },
     {
-      "includes": ["src/contexts/ThemeContext.tsx"],
+      "includes": ["src/contexts/theme-context.tsx"],
       "linter": {
         "rules": {
           "security": {

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ThemeToggle } from "@/components/common/theme-toggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { useApplicationContext } from "@/contexts/ApplicationContext";
+import { useApplicationContext } from "@/contexts/application-context";
 import { cn } from "@/lib/utils";
 
 export const Navbar = ({ className }: { className?: string }) => {

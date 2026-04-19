@@ -1,5 +1,5 @@
 import { isRouteErrorResponse, Link, useRouteError } from "react-router-dom";
-import { ErrorScreenShell } from "@/components/feedback/ErrorScreenShell";
+import { ErrorScreenShell } from "@/components/feedback/error-screen-shell";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 

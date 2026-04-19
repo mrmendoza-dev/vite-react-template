@@ -1,11 +1,11 @@
 import type { CSSProperties } from "react";
 import { Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
-import { ErrorBoundary } from "@/components/feedback/ErrorBoundary";
-import { AppSidebar } from "@/components/layout/AppSidebar";
-import { Navbar } from "@/components/layout/Navbar";
+import { ErrorBoundary } from "@/components/feedback/error-boundary";
+import { AppSidebar } from "@/components/layout/app-sidebar";
+import { Navbar } from "@/components/layout/navbar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { useApplicationContext } from "@/contexts/ApplicationContext";
+import { useApplicationContext } from "@/contexts/application-context";
 import { cn } from "@/lib/utils";
 
 const ShellLayout = () => {

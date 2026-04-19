@@ -1,6 +1,6 @@
 // import * as Sentry from "@sentry/react";
 import React, { type ErrorInfo } from "react";
-import { ErrorGeneric } from "@/components/feedback/ErrorGeneric";
+import { ErrorGeneric } from "@/components/feedback/error-generic";
 
 interface ErrorBoundaryProps {
   children: React.ReactNode;
