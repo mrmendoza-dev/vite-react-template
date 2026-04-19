@@ -18,6 +18,10 @@ Stack alignment with [REPO-MODERNIZATION.md](./REPO-MODERNIZATION.md) (April 202
 - **Drizzle ORM** — SQL schema and migrations (`server/db/`, `drizzle.config.ts`); default SQLite via `bun:sqlite`, `DATABASE_PATH` for location; scripts `db:generate`, `db:push`, `db:studio`.
 - **TanStack Query** — `@tanstack/react-query` with a shared client (`src/lib/query-client.ts`) and provider in `src/contexts/Providers.tsx` for server state and Eden-backed `queryFn`s.
 
+## v2.2.0
+
+- **`react-error-boundary`** — Root and shell error boundaries (`src/app.tsx`, `src/layouts/app-shell.tsx`) use the library’s `ErrorBoundary` with `fallbackRender` and `onError` (ready for Sentry). `ErrorGeneric` and `ErrorScreenShell` under `src/components/feedback/` remain the UI layer; the custom class boundary was replaced by a thin wrapper around the library in `error-boundary.tsx`.
+
 ## v2.1.0
 
 Incremental polish on the v2 stack: data layer and client state are exercised end-to-end, and routing follows the React Router data-router layout pattern.

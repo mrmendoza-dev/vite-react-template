@@ -1,50 +1,34 @@
 // import * as Sentry from "@sentry/react";
-import React, { type ErrorInfo } from "react";
+import type { FC, ReactNode } from "react";
+import { ErrorBoundary as LibErrorBoundary } from "react-error-boundary";
 import { ErrorGeneric } from "@/components/feedback/error-generic";
 
-interface ErrorBoundaryProps {
-  children: React.ReactNode;
+type ErrorBoundaryProps = {
+  children: ReactNode;
   label?: string;
-}
+};
 
-export class ErrorBoundary extends React.Component<
-  ErrorBoundaryProps,
-  { hasError: boolean; error: Error | null; errorInfo?: ErrorInfo }
-> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false, error: null };
-  }
+export const ErrorBoundary: FC<ErrorBoundaryProps> = ({ children, label }) => {
+  return (
+    <LibErrorBoundary
+      fallbackRender={({ resetErrorBoundary }) => (
+        <ErrorGeneric onRetry={resetErrorBoundary} />
+      )}
+      onError={(_error, _info) => {
+        console.info(label);
 
-  static getDerivedStateFromError(error: Error) {
-    return { hasError: true, error };
-  }
-
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.info(this.props.label);
-
-    // Sentry.captureException(error, {
-    //   extra: {
-    //     componentStack: errorInfo.componentStack,
-    //     message: error.message,
-    //     name: error.name,
-    //     stack: error.stack,
-    //     url: window.location.href,
-    //   },
-    // });
-    this.setState({ hasError: true, error, errorInfo });
-  }
-
-  reset = () => {
-    this.setState({ hasError: false, error: null });
-  };
-
-  render() {
-    const { hasError } = this.state;
-    if (hasError) {
-      return <ErrorGeneric onRetry={this.reset} />;
-    }
-
-    return this.props.children;
-  }
-}
+        // Sentry.captureException(_error, {
+        //   extra: {
+        //     componentStack: _info.componentStack,
+        //     message: _error.message,
+        //     name: _error.name,
+        //     stack: _error.stack,
+        //     url: window.location.href,
+        //   },
+        // });
+      }}
+    >
+      {children}
+    </LibErrorBoundary>
+  );
+};

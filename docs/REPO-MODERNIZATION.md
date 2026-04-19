@@ -1,6 +1,6 @@
 # Repo modernization
 
-- April 14, 2026 (updated April 15, 2026)
+- April 14, 2026 (updated April 18, 2026)
 
 This document describes the **shift in paradigms** for this template: from a Node- and 2020-era JS toolchain to a Bun-first, web-standards stack with React 19. It is not an exhaustive file manifest—use git history for line-by-line diffs.
 
@@ -39,11 +39,25 @@ This document describes the **shift in paradigms** for this template: from a Nod
 
 - **Server:** TypeScript-only tree (`server/*.ts`): factory for the Elysia app, env helpers, typed routes; **Drizzle** client + migrator wired from `server/db`; entry listens with Bun and runs migrations before serving.
 - **Client:** Vite + React 19; global styles consolidated through a v4-oriented CSS entry (e.g. `src/styles/index.css`) plus existing base/theme layers where still useful; **TanStack Query** wraps the app for data fetching (see `HomePage` health strip as a minimal example).
-- **Components:** Expanded shadcn/ui kit under `src/components/ui/`, aligned with Base UI and Tailwind v4 tokens.
+- **Components:** Expanded shadcn/ui kit under `src/components/ui/`, aligned with Base UI and Tailwind v4 tokens. Recoverable render errors are caught with **`react-error-boundary`** in `@/components/feedback/error-boundary` (fallback [`ErrorGeneric`](../src/components/feedback/error-generic.tsx) + [`ErrorScreenShell`](../src/components/feedback/error-screen-shell.tsx)); React Router loader/render errors at the shell still use `errorElement` → [`RouteErrorPage`](../src/pages/route-error-page.tsx).
 - **Tests:** Vitest + Testing Library; Bun-oriented preloads where needed; server tests under `tests/server/` (Drizzle + SQLite uses **`bun:test`** in `*.bun.test.ts` because Vitest’s bundle does not load `bun:sqlite`; `npm test` / `bun run test` runs Vitest then those Bun tests).
 - **Docs:** Changelog and this spec live under `docs/` (root changelog narrative retired in favor of `docs/CHANGELOG.md`).
 
 Legacy editor-only or npm-only artifacts (old ESLint config, npmrc quirks, ad hoc VS Code task files) were dropped in favor of **scripts + Biome + Turbo**.
+
+---
+
+## Client routing and layout
+
+The client uses **React Router** with a clear split between **where the router is mounted**, **where routes are declared**, and **where chrome around pages lives**.
+
+1. **`src/app.tsx`** — Wraps the tree in `Providers` and the root **`ErrorBoundary`** (`react-error-boundary` via `@/components/feedback/error-boundary`), then renders **`RouterProvider`** with **`router`** imported from `@/router`. The router is not defined inline here; this file only wires the provider.
+
+2. **`src/router.tsx`** — **Defines the route tree** (`appRoutes`) and exports **`router`** via **`createBrowserRouter`**. It **imports `AppShell`** from `@/layouts/app-shell` and sets it as the **element for the `/` route**; nested routes (home index, lazy pages, dev-only routes in development) are **`children`** of that route. **`errorElement`** (e.g. `RouteErrorPage`) is attached at the shell level as needed. Keeping **`AppShell` in the router** makes the URL map explicit: one place lists paths and which layout wraps them.
+
+3. **`src/layouts/`** — **Route-level shells**: named exports like **`AppShell`** describe a full-app frame (sidebar, nav, providers that only wrap routed content). Shells **compose pieces from `@/components/layout`** (e.g. navbar, sidebar) and **`@/components/ui`** as needed, and render **`<Outlet />`** from `react-router-dom` where **child route components** mount. Add another file in this folder when you need a different shell (marketing, auth-only, minimal).
+
+**Flow in short:** `main.tsx` → **`App`** → **`RouterProvider(router)`** → root route renders **`AppShell`** → **`Outlet`** shows the matched child page.
 
 ---
 
@@ -90,7 +104,7 @@ Legacy editor-only or npm-only artifacts (old ESLint config, npmrc quirks, ad ho
 │       ├── helpers.ts
 │       └── index.ts
 ├── src/
-│   ├── App.tsx
+│   ├── app.tsx
 │   ├── main.tsx
 │   ├── registerSW.ts
 │   ├── router.tsx
@@ -99,14 +113,14 @@ Legacy editor-only or npm-only artifacts (old ESLint config, npmrc quirks, ad ho
 │   ├── components/
 │   │   ├── common/                 # e.g. file-uploader, theme-toggle, eye-dropper
 │   │   ├── dev/                    # DevErrorTriggers
-│   │   ├── feedback/               # ErrorBoundary, ErrorGeneric, …
+│   │   ├── feedback/               # error-boundary (react-error-boundary), ErrorGeneric, ErrorScreenShell, …
 │   │   ├── layout/                 # AppSidebar, Navbar, PageTransition
 │   │   └── ui/                     # shadcn-style kit (many *.tsx; see repo)
 │   ├── constants/
 │   ├── contexts/                   # Providers, Theme, Application
 │   ├── hooks/
 │   ├── layouts/
-│   │   └── AppShell.tsx
+│   │   └── app-shell.tsx
 │   ├── lib/
 │   │   ├── api-client.ts           # Eden Treaty client
 │   │   ├── query-client.ts
