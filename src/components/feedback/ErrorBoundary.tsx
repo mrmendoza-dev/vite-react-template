@@ -1,7 +1,7 @@
 // import * as Sentry from "@sentry/react";
 import type { FC, ReactNode } from "react";
 import { ErrorBoundary as LibErrorBoundary } from "react-error-boundary";
-import { ErrorGeneric } from "@/components/feedback/error-generic";
+import { ErrorGeneric } from "@/components/feedback/ErrorGeneric";
 
 type ErrorBoundaryProps = {
   children: ReactNode;

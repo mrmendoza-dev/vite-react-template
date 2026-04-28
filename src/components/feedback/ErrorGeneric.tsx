@@ -1,6 +1,6 @@
 import { AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { ErrorScreenShell } from "@/components/feedback/error-screen-shell";
+import { ErrorScreenShell } from "@/components/feedback/ErrorScreenShell";
 import { Button } from "@/components/ui/button";
 
 export type ErrorGenericProps = {

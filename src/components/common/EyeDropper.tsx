@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useEyeDropper } from "@/hooks/use-eye-dropper";
+import { useEyeDropper } from "@/hooks/useEyeDropper";
 import { cn } from "@/lib/utils";
 import { Pipette } from "lucide-react";
 import * as React from "react";

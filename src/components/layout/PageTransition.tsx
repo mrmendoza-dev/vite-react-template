@@ -1,4 +1,4 @@
-// src/components/PageTransition.tsx
+// src/components/layout/PageTransition.tsx
 import { motion, type Transition } from "framer-motion";
 import type { FC, ReactNode } from "react";
 
