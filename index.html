@@ -3,18 +3,38 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Set the theme class before first paint to avoid a flash of the wrong theme.
+         Mirrors the storage key + default in src/contexts/ThemeContext.tsx. -->
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem("vite-ui-theme") || "dark";
+          const systemDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+          const theme =
+            stored === "system" ? (systemDark ? "dark" : "light") : stored;
+          document.documentElement.classList.add(theme);
+        } catch {
+          /* localStorage unavailable — fall back to CSS default */
+        }
+      })();
+    </script>
+
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="content-language" content="en-us" />
     <title>Vite_React_Template</title>
 
+    <!-- TODO: replace these placeholder SEO values for your site. -->
     <meta name="description" content="description for SEO" />
     <meta name="keywords" content="keywords for SEO, comma separated" />
     <meta name="author" content="Your Name or Company" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://www.website.com/" />
-    <meta name="google-site-verification" content="your-verification-code" />
+    <!-- <meta name="google-site-verification" content="your-verification-code" /> -->
 
-    <link rel="icon" type="image/svg+xml" href="/images/logo.png" />
+    <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />

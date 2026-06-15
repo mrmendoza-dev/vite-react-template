@@ -74,16 +74,6 @@
           }
         }
       }
-    },
-    {
-      "includes": ["src/contexts/theme-context.tsx"],
-      "linter": {
-        "rules": {
-          "security": {
-            "noDangerouslySetInnerHtml": "off"
-          }
-        }
-      }
     }
   ]
 }

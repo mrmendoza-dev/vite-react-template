@@ -1,7 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
-import { VitePWA } from "vite-plugin-pwa";
 import { loadEnv } from "vite";
+import { VitePWA } from "vite-plugin-pwa";
 import { defineConfig } from "vitest/config";
 
 // https://vitejs.dev/config/
@@ -23,11 +23,7 @@ export default defineConfig(({ mode }) => {
         registerType: "autoUpdate",
         injectRegister: "auto",
         pwaAssets: { disabled: true },
-        includeAssets: [
-          "favicon/favicon.ico",
-          "favicon/apple-touch-icon.png",
-          "favicon/masked-icon.svg",
-        ],
+        includeAssets: ["favicon/favicon.ico", "favicon/apple-touch-icon.png"],
         manifest: {
           name: "Vite_React_Template",
           short_name: "Vite_React_Template",

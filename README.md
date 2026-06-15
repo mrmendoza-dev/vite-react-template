@@ -117,14 +117,12 @@ vite-react-template/
 │   ├── env.ts             # Port resolution
 │   └── index.ts           # Listen + migrations
 ├── src/
-│   ├── assets/            # Frontend assets (optional)
 │   ├── components/
 │   │   ├── common/        # Shared pieces (e.g. theme toggle, file uploader)
 │   │   ├── feedback/      # Errors, boundary
 │   │   ├── layout/        # Navbar, sidebar, page transition
 │   │   └── ui/            # shadcn/ui components
 │   ├── contexts/          # Theme, app, providers (incl. QueryClient)
-│   ├── data/              # Placeholder for app data modules
 │   ├── hooks/
 │   ├── layouts/           # App shell / route layout
 │   ├── lib/               # api-client (Eden), query-client, cn/utils
@@ -132,13 +130,13 @@ vite-react-template/
 │   ├── styles/            # Tailwind v4 entry + themes
 │   ├── utils/
 │   ├── main.tsx
-│   ├── router.tsx         # createBrowserRouter + lazy routes
-│   └── registerSW.ts
+│   ├── Router.tsx         # createBrowserRouter + lazy routes
+│   └── register-sw.ts
 ├── tests/
 │   ├── components/
 │   ├── server/            # Includes *.bun.test.ts (Bun runner + bun:sqlite)
 │   ├── utils/
-│   └── setupTests.ts      # Vitest setup
+│   └── setup-tests.ts     # Vitest setup
 ├── biome.json
 ├── components.json
 ├── drizzle.config.ts
@@ -178,12 +176,12 @@ vite-react-template/
 ## Included UI & behavior
 
 - **Layout:** `AppShell` with sidebar groups, navbar, theme toggle, page transitions
-- **Routes:** Home, Chat, generic detail (`/detail/:id`), Profile (see `src/router.tsx`)
-- **Hooks:** e.g. `useIsMobile` (`use-mobile.ts`), `useLocalStorage`, `useModal`, `useFocus`, `useInterval`, `useEyeDropper` (where supported in the browser)
+- **Routes:** Home, Chat, generic detail (`/detail/:id`), Profile (see `src/Router.tsx`)
+- **Hooks:** e.g. `useIsMobile` (`use-mobile.ts`), `useLocalStorage`, `useFocus`, `useInterval`, `useEyeDropper` (where supported in the browser)
 
 ## Testing
 
-- **Vitest** (`tests/**/*.test.{ts,tsx}`) with `tests/setupTests.ts`; `**/*.bun.test.ts` excluded from Vitest
+- **Vitest** (`tests/**/*.test.{ts,tsx}`) with `tests/setup-tests.ts`; `**/*.bun.test.ts` excluded from Vitest
 - **Bun’s test runner** for files that need `bun:sqlite` (e.g. `tests/server/db.bun.test.ts`)
 
 ```bash
@@ -199,7 +197,7 @@ tests/
 ├── components/
 ├── server/
 ├── utils/
-└── setupTests.ts
+└── setup-tests.ts
 ```
 
 ## Deployment
@@ -217,7 +215,7 @@ Static frontend output is **`dist`** (`vite build`). The API is a separate Bun p
 
 ## PWA
 
-`vite-plugin-pwa` provides manifest, icons, and service worker registration (`src/registerSW.ts`). Use HTTPS in production for full PWA behavior.
+`vite-plugin-pwa` provides manifest, icons, and service worker registration (`src/register-sw.ts`). Use HTTPS in production for full PWA behavior.
 
 ## Customizing theme & components
 

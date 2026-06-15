@@ -14,9 +14,8 @@ export const DevErrorTriggers = () => {
   }
 
   return (
-    <div
+    <section
       className="rounded-lg border border-dashed border-orange-500/35 bg-orange-500/5 px-4 py-3 text-sm"
-      role="region"
       aria-label="Development error UI tests"
     >
       <p className="font-medium text-foreground">
@@ -49,6 +48,6 @@ export const DevErrorTriggers = () => {
           Route error page
         </Link>
       </div>
-    </div>
+    </section>
   );
 };

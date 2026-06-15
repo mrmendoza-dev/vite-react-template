@@ -1,9 +1,9 @@
+import { AlertCircle, Check, Edit2, FileText, Upload, X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { AlertCircle, Check, Edit2, FileText, Upload, X } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
 
 // Single file mode props
 interface SingleFileUploaderProps {
@@ -92,7 +92,7 @@ const FileListItem = ({
     <div
       className={cn(
         "flex items-center justify-between text-sm gap-2",
-        className
+        className,
       )}
     >
       <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -188,11 +188,11 @@ export const FileUploader = (props: FileUploaderProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024) return bytes + " bytes";
-    else if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    if (bytes < 1024) return `${bytes} bytes`;
+    else if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     else if (bytes < 1024 * 1024 * 1024)
-      return (bytes / (1024 * 1024)).toFixed(1) + " MB";
-    else return (bytes / (1024 * 1024 * 1024)).toFixed(1) + " GB";
+      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    else return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)} GB`;
   };
 
   // Format accept string into readable format
@@ -214,7 +214,7 @@ export const FileUploader = (props: FileUploaderProps) => {
   const validateFile = (file: File): string | null => {
     if (maxSize && file.size > maxSize) {
       return `File "${file.name}" is too large. Max size is ${formatFileSize(
-        maxSize
+        maxSize,
       )}`;
     }
     return null;
@@ -239,7 +239,7 @@ export const FileUploader = (props: FileUploaderProps) => {
       setError(
         `Too many files. Maximum ${props.maxFiles} file${
           props.maxFiles > 1 ? "s" : ""
-        } allowed.`
+        } allowed.`,
       );
       return;
     }
@@ -357,7 +357,7 @@ export const FileUploader = (props: FileUploaderProps) => {
             setError(
               `Too many files. Maximum ${props.maxFiles} file${
                 props.maxFiles > 1 ? "s" : ""
-              } allowed.`
+              } allowed.`,
             );
             return;
           }
@@ -366,9 +366,14 @@ export const FileUploader = (props: FileUploaderProps) => {
           props.onValueChange(validFiles[0] || null);
         }
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
-    [isMultiple, props.value, props.maxFiles, props.onValueChange, validateFile]
+    [
+      isMultiple,
+      props.value,
+      props.maxFiles,
+      props.onValueChange,
+      validateFile,
+    ],
   );
 
   // Set up paste event listener
@@ -417,8 +422,8 @@ export const FileUploader = (props: FileUploaderProps) => {
   const files = isMultiple
     ? props.value || []
     : props.value && props.value instanceof File
-    ? [props.value]
-    : [];
+      ? [props.value]
+      : [];
   const hasFiles = files.length > 0;
 
   const getPlaceholderText = () => {
@@ -456,7 +461,7 @@ export const FileUploader = (props: FileUploaderProps) => {
               disabled && "opacity-50 cursor-not-allowed",
               hasFiles && isMultiple && showFileList
                 ? "p-2"
-                : "flex items-center justify-center px-3 py-2 min-h-10"
+                : "flex items-center justify-center px-3 py-2 min-h-10",
             )}
           >
             {hasFiles ? (
@@ -465,6 +470,7 @@ export const FileUploader = (props: FileUploaderProps) => {
                 <div className="flex flex-col gap-2">
                   {files.map((file, index) => (
                     <FileListItem
+                      // biome-ignore lint/suspicious/noArrayIndexKey: File objects have no stable id; name+index is the best available key
                       key={`${file.name}-${index}`}
                       file={file}
                       formatFileSize={formatFileSize}

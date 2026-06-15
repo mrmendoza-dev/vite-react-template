@@ -6,9 +6,11 @@ const pollEvery5sUnlessError = (query: {
   state: { status: string };
 }): number | false => (query.state.status === "error" ? false : 5_000);
 
+const moduleIds = ["01", "02", "03", "04", "05", "06"];
+const scrollParagraphKeys = ["intro", "body", "tail"];
+
 export const HomePage = () => {
-  const showStaticDeployHint =
-    import.meta.env.PROD && !hasExplicitApiOrigin;
+  const showStaticDeployHint = import.meta.env.PROD && !hasExplicitApiOrigin;
 
   const health = useQuery({
     queryKey: ["api", "health"],
@@ -65,11 +67,12 @@ export const HomePage = () => {
           Server (Elysia + Drizzle)
         </h2>
         <p className="text-sm text-muted-foreground">
-          Live data from <code className="text-foreground">GET /api/health</code>{" "}
-          and <code className="text-foreground">GET /api/examples</code>. Refreshes
+          Live data from{" "}
+          <code className="text-foreground">GET /api/health</code> and{" "}
+          <code className="text-foreground">GET /api/examples</code>. Refreshes
           every 5s while healthy. Run the Bun server and ensure{" "}
-          <code className="text-foreground">SERVER_PORT</code> matches your env (or
-          set <code className="text-foreground">VITE_API_URL</code>).
+          <code className="text-foreground">SERVER_PORT</code> matches your env
+          (or set <code className="text-foreground">VITE_API_URL</code>).
         </p>
 
         {showStaticDeployHint ? (
@@ -79,8 +82,8 @@ export const HomePage = () => {
           >
             This production build has no{" "}
             <code className="text-foreground">VITE_API_URL</code>. The app calls
-            same-origin <code className="text-foreground">/api/*</code> (fine if your
-            host proxies to Bun). Pure static hosts usually need{" "}
+            same-origin <code className="text-foreground">/api/*</code> (fine if
+            your host proxies to Bun). Pure static hosts usually need{" "}
             <code className="text-foreground">VITE_API_URL</code> set at{" "}
             <strong className="font-medium text-foreground">build</strong> time.
           </p>
@@ -91,10 +94,7 @@ export const HomePage = () => {
             <h3 className="text-sm font-medium text-muted-foreground mb-2">
               Health
             </h3>
-            <p
-              className="text-sm font-mono"
-              data-testid="api-health-status"
-            >
+            <p className="text-sm font-mono" data-testid="api-health-status">
               API:{" "}
               {health.isPending
                 ? "…"
@@ -118,8 +118,8 @@ export const HomePage = () => {
                 {showStaticDeployHint ? (
                   <>
                     On a static host, set{" "}
-                    <code className="text-foreground">VITE_API_URL</code> to your
-                    API origin and rebuild.
+                    <code className="text-foreground">VITE_API_URL</code> to
+                    your API origin and rebuild.
                   </>
                 ) : (
                   <>Is the Bun API running?</>
@@ -149,12 +149,12 @@ export const HomePage = () => {
       </section>
 
       <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {Array.from({ length: 6 }).map((_, i) => (
+        {moduleIds.map((id) => (
           <div
-            key={i}
+            key={id}
             className="p-6 rounded-xl border bg-card text-card-foreground shadow"
           >
-            <h3 className="font-semibold mb-2">Module_0{i + 1}</h3>
+            <h3 className="font-semibold mb-2">Module_{id}</h3>
             <div className="h-24 w-full bg-muted rounded-md animate-pulse" />
           </div>
         ))}
@@ -162,8 +162,8 @@ export const HomePage = () => {
 
       <section className="max-w-2xl space-y-4">
         <h2 className="text-2xl font-bold">Scroll & Typography Check</h2>
-        {Array.from({ length: 3 }).map((_, i) => (
-          <p key={i} className="leading-7 text-muted-foreground">
+        {scrollParagraphKeys.map((key) => (
+          <p key={key} className="leading-7 text-muted-foreground">
             This is a placeholder paragraph to test typography and vertical
             scrolling. If the sidebar and navbar stay in place while this moves,
             your layout overflow is configured correctly.

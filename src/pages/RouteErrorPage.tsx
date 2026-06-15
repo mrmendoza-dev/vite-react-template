@@ -37,7 +37,10 @@ export const RouteErrorPage = () => {
         ) : null}
         <Link
           to="/"
-          className={cn(buttonVariants({ variant: "default", size: "default" }), "mt-6 inline-flex")}
+          className={cn(
+            buttonVariants({ variant: "default", size: "default" }),
+            "mt-6 inline-flex",
+          )}
         >
           Back to home
         </Link>

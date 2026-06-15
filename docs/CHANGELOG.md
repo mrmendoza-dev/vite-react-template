@@ -20,7 +20,7 @@ Stack alignment with [REPO-MODERNIZATION.md](./REPO-MODERNIZATION.md) (April 202
 
 ## v2.2.0
 
-- **`react-error-boundary`** — Root and shell error boundaries (`src/app.tsx`, `src/layouts/app-shell.tsx`) use the library’s `ErrorBoundary` with `fallbackRender` and `onError` (ready for Sentry). `ErrorGeneric` and `ErrorScreenShell` under `src/components/feedback/` remain the UI layer; the custom class boundary was replaced by a thin wrapper around the library in `error-boundary.tsx`.
+- **`react-error-boundary`** — Root and shell error boundaries (`src/App.tsx`, `src/layouts/AppShell.tsx`) use the library’s `ErrorBoundary` with `fallbackRender` and `onError` (ready for Sentry). `ErrorGeneric` and `ErrorScreenShell` under `src/components/feedback/` remain the UI layer; the custom class boundary was replaced by a thin wrapper around the library in `ErrorBoundary.tsx`.
 
 ## v2.1.0
 
@@ -28,7 +28,7 @@ Incremental polish on the v2 stack: data layer and client state are exercised en
 
 - **Drizzle** — Example `examples` SQLite schema and `/api/examples` wired from `server/`; dev DB path via `DATABASE_PATH` / `data/dev.db` with parent dir creation on first run; migrations run at server start.
 - **TanStack Query** — Home (and future pages) use shared `QueryClient` + `useQuery` against Eden (`api.api.health`, `api.api.examples`) for live server-backed UI.
-- **Routing** — `createBrowserRouter` / `RouterProvider` with `src/router.tsx`, `export const appRoutes` for tests, `src/layouts/AppShell.tsx` + `<Outlet />`, route-level `lazy` for secondary pages, and `errorElement` for branch errors; Vite dev proxy for `/api` with `SERVER_PORT` / optional `VITE_API_URL` (no hardcoded API port in the client).
+- **Routing** — `createBrowserRouter` / `RouterProvider` with `src/Router.tsx`, `export const appRoutes` for tests, `src/layouts/AppShell.tsx` + `<Outlet />`, route-level `lazy` for secondary pages, and `errorElement` for branch errors; Vite dev proxy for `/api` with `SERVER_PORT` / optional `VITE_API_URL` (no hardcoded API port in the client).
 
 
 ## v1.1.0

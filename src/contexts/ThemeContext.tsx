@@ -13,47 +13,31 @@ type ThemeProviderState = {
   setTheme: (theme: Theme) => void;
 };
 
-const initialState: ThemeProviderState = {
-  theme: "system",
-  setTheme: () => null,
-};
-
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
-
-// Script to prevent theme flicker
-const themeScript = `
-  (function() {
-    const storageKey = "vite-ui-theme";
-    const theme = localStorage.getItem(storageKey) || "dark";
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    
-    document.documentElement.classList.add(theme === "system" ? systemTheme : theme);
-  })()
-`;
+const ThemeProviderContext = createContext<ThemeProviderState | undefined>(
+  undefined,
+);
 
 export function ThemeProvider({
   children,
   defaultTheme = "dark",
   storageKey = "vite-ui-theme",
-  ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
   );
-  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     const root = window.document.documentElement;
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
-    const applyTheme = (theme: Theme) => {
+    const applyTheme = (next: Theme) => {
       root.classList.remove("light", "dark");
       const effectiveTheme =
-        theme === "system" ? (mediaQuery.matches ? "dark" : "light") : theme;
+        next === "system" ? (mediaQuery.matches ? "dark" : "light") : next;
       root.classList.add(effectiveTheme);
     };
 
-    // Handle system theme changes
+    // Keep "system" in sync when the OS preference changes.
     const handleSystemThemeChange = () => {
       if (theme === "system") {
         applyTheme("system");
@@ -61,7 +45,6 @@ export function ThemeProvider({
     };
 
     applyTheme(theme);
-    setIsInitialized(true);
     mediaQuery.addEventListener("change", handleSystemThemeChange);
 
     return () => {
@@ -71,24 +54,16 @@ export function ThemeProvider({
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
+    setTheme: (next: Theme) => {
+      localStorage.setItem(storageKey, next);
+      setTheme(next);
     },
   };
 
-  // Prevent hydration mismatch by not rendering until initialized
   return (
-    <>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: themeScript,
-        }}
-      />
-      <ThemeProviderContext.Provider {...props} value={value}>
-        {isInitialized ? children : null}
-      </ThemeProviderContext.Provider>
-    </>
+    <ThemeProviderContext.Provider value={value}>
+      {children}
+    </ThemeProviderContext.Provider>
   );
 }
 

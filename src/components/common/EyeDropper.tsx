@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { useEyeDropper } from "@/hooks/useEyeDropper";
-import { cn } from "@/lib/utils";
 import { Pipette } from "lucide-react";
 import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { useEyeDropper } from "@/hooks/use-eye-dropper";
+import { cn } from "@/lib/utils";
 
 export interface EyedropperProps
   extends Omit<
@@ -36,7 +36,7 @@ const Eyedropper = React.forwardRef<HTMLButtonElement, EyedropperProps>(
       children,
       ...props
     },
-    ref
+    ref,
   ) => {
     const { openEyeDropper } = useEyeDropper();
 
@@ -69,7 +69,7 @@ const Eyedropper = React.forwardRef<HTMLButtonElement, EyedropperProps>(
         {children || <Pipette className="size-4" />}
       </Button>
     );
-  }
+  },
 );
 
 Eyedropper.displayName = "Eyedropper";
