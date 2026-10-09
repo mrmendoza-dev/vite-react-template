@@ -70,9 +70,6 @@ The client uses **React Router** with a clear split between **where the router i
 ```text
 .
 ├── biome.json
-├── boilerplate/
-│   ├── BOILERPLATE_SETUP.md
-│   └── setup-boilerplate.js
 ├── bun.lock
 ├── bunfig.toml
 ├── components.json
@@ -163,7 +160,6 @@ Root files not shown above: `.env.example` (copy to `.env` locally).
 ## Optional next steps (not required for “modern” baseline)
 
 - **React Compiler:** enable when you want less manual memoization; stack is already on React 19.
-- **Plugin choice:** Vite may suggest `@vitejs/plugin-react` over `plugin-react-swc` if you are not relying on SWC-specific behavior—evaluate per project.
 
 ---
 

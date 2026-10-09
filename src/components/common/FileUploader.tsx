@@ -170,6 +170,14 @@ const FileListItem = ({
   );
 };
 
+const formatFileSize = (bytes: number): string => {
+  if (bytes < 1024) return `${bytes} bytes`;
+  else if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  else if (bytes < 1024 * 1024 * 1024)
+    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  else return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)} GB`;
+};
+
 export const FileUploader = (props: FileUploaderProps) => {
   const {
     label = "Upload file",
@@ -187,14 +195,6 @@ export const FileUploader = (props: FileUploaderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024) return `${bytes} bytes`;
-    else if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    else if (bytes < 1024 * 1024 * 1024)
-      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-    else return `${(bytes / (1024 * 1024 * 1024)).toFixed(1)} GB`;
-  };
-
   // Format accept string into readable format
   const formatAcceptedTypes = (accept: string): string => {
     if (accept === "*") return "All files";
@@ -211,14 +211,17 @@ export const FileUploader = (props: FileUploaderProps) => {
     return types.join(", ");
   };
 
-  const validateFile = (file: File): string | null => {
-    if (maxSize && file.size > maxSize) {
-      return `File "${file.name}" is too large. Max size is ${formatFileSize(
-        maxSize,
-      )}`;
-    }
-    return null;
-  };
+  const validateFile = useCallback(
+    (file: File): string | null => {
+      if (maxSize && file.size > maxSize) {
+        return `File "${file.name}" is too large. Max size is ${formatFileSize(
+          maxSize,
+        )}`;
+      }
+      return null;
+    },
+    [maxSize],
+  );
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;

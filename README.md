@@ -6,7 +6,7 @@ For the full “why and what changed” story, see [docs/REPO-MODERNIZATION.md](
 
 ## Features
 
-- **Runtime & tooling:** Bun 1.3+ (`packageManager` pinned in `package.json`), Turborepo task graph, Vitest + Testing Library
+- **Runtime & tooling:** Bun 1.3+ (`packageManager` pinned in `package.json`), Turborepo task graph, Vitest + Testing Library, GitHub Actions CI
 - **Frontend:** React 19, Vite 8 (Rolldown-era build), React Router 7, PWA via `vite-plugin-pwa`
 - **Styling:** Tailwind v4 via `@tailwindcss/vite`, theme tokens in CSS (`src/styles/`)
 - **UI:** Broad shadcn/ui kit under `src/components/ui/` (`@base-ui/react`, `components.json` for the CLI)
@@ -105,7 +105,8 @@ bun run preview
 
 ```
 vite-react-template/
-├── boilerplate/           # Optional rename / setup helper (see boilerplate/BOILERPLATE_SETUP.md)
+├── .github/
+│   └── workflows/          # CI (bun install + bun run ci)
 ├── data/                  # Default SQLite file (e.g. dev.db); path overridable via DATABASE_PATH
 ├── docs/                  # CHANGELOG, REPO-MODERNIZATION, etc.
 ├── public/                # Static assets, PWA-related files, _redirects, robots.txt
@@ -159,7 +160,7 @@ vite-react-template/
 
 ### Frontend
 
-- React 19, TypeScript, Vite 8, `@vitejs/plugin-react-swc`
+- React 19, TypeScript, Vite 8, `@vitejs/plugin-react`
 - Tailwind CSS v4, `tailwind-merge`, `class-variance-authority`
 - shadcn/ui-style components (`@base-ui/react`, `shadcn` CLI)
 - React Router DOM 7, TanStack Query, Lucide icons, `@fontsource-variable/inter`
